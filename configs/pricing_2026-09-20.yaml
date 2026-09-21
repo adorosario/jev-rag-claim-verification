@@ -1,0 +1,71 @@
+generated_at_utc: '2026-09-20T14:38:17.918995+00:00'
+tier_policy: standard service tier, uncached, per spec §22 and rule 7
+snapshots:
+  openai:
+    url: https://platform.openai.com/docs/pricing.md
+    path: data/pricing_snapshots/openai-2026-09-20.md
+    sha256: 714cbb324e68df34baa206f6d2052977a79de4ee54f655437d4faa09ca4a87d3
+    fetched_at_utc: '2026-09-20T14:38:15.083998+00:00'
+    bytes: '23063'
+  anthropic:
+    url: https://docs.claude.com/en/docs/about-claude/pricing.md
+    path: data/pricing_snapshots/anthropic-2026-09-20.md
+    sha256: 52ec9ccca111bc1635c300684c893fcedff8b146e5f6bed3c1c8c0fdf29a8d84
+    fetched_at_utc: '2026-09-20T14:38:16.539311+00:00'
+    bytes: '45062'
+  typesafe:
+    url: https://docs.typesafe.ai/models.md
+    path: data/pricing_snapshots/typesafe-2026-09-20.md
+    sha256: 9d20bb3c90a0147532d0b20ddc4c64579391be7842e965543b27bad684eeb4d6
+    fetched_at_utc: '2026-09-20T14:38:17.916944+00:00'
+    bytes: '7245'
+prices_per_mtok_usd:
+  gpt-6-astra:
+    input: 10.0
+    output: 50.0
+    tier: standard/short-context/uncached
+    source: openai
+    notes:
+    - short-context column; every dev example is far below any long-context threshold
+      (max ~34k tokens)
+  gpt-5.6-sol:
+    input: 4.0
+    output: 20.0
+    tier: standard/short-context/uncached
+    source: openai
+    notes:
+    - short-context column; every dev example is far below any long-context threshold
+      (max ~34k tokens)
+  Claude Sonnet 5:
+    input: 2.0
+    output: 10.0
+    tier: standard/uncached
+    source: anthropic
+    notes:
+    - base input (uncached) and output columns
+  Claude Sonnet 4.5:
+    input: 3.0
+    output: 15.0
+    tier: standard/uncached
+    source: anthropic
+    notes:
+    - base input (uncached) and output columns
+  jev-1.13.0:
+    input: 0.042
+    output: 0.0
+    tier: standard/uncached
+    source: typesafe
+    notes:
+    - TypeSafe charges input tokens only; output tokens are free
+local_models:
+  lytang/MiniCheck-Flan-T5-Large:
+    api_price_usd: 0.0
+    cost_model: local compute; record hardware and wall-clock, then price against
+      the chosen instance rate
+    hardware: recorded per run in run_manifest.json
+caveats:
+- Anthropic documents that Claude 4.7+ use a newer tokenizer producing ~30% more tokens
+  for the same text than Sonnet 4.6 and earlier. Cost is therefore computed from MEASURED
+  token usage per example, never from a price-per-token comparison across models.
+- claude-sonnet-4-5 is priced here because it is the production verifier's model (spec
+  §7.5, §33), not because it is a baseline.

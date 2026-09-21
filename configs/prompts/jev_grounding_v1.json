@@ -1,0 +1,17 @@
+{
+  "prompt_id": "jev_grounding_v1",
+  "spec_ref": "§10",
+  "errata_applied": ["E1"],
+  "question_name": "grounding",
+  "question_type": "choice",
+  "instructions": "Determine whether the evidence supports all materially important parts of the claim. Judge only from the supplied evidence.",
+  "criteria": {
+    "supported": "The evidence explicitly states or directly entails every materially important part of the claim.",
+    "not_supported": "The evidence fails to support at least one materially important part of the claim. This includes missing information, partial support, contradiction, incorrect numbers/dates/entities, scope overreach, or unsupported causal/detail additions."
+  },
+  "state_keys": ["claim", "evidence"],
+  "label_map": {
+    "supported": "SUPPORTED",
+    "not_supported": "NOT_SUPPORTED"
+  }
+}

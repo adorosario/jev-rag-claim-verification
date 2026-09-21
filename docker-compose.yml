@@ -1,0 +1,24 @@
+services:
+  dev:
+    build:
+      context: .
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    image: jev-rag-verification:dev
+    working_dir: /app
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - HF_HUB_DISABLE_XET=${HF_HUB_DISABLE_XET:-1}
+    user: "${UID:-1000}:${GID:-1000}"
+    volumes:
+      - .:/app
+      - venv:/opt/venv
+      - hf-cache:/opt/hf-cache
+      - uv-cache:/opt/uv-cache
+volumes:
+  venv:
+  hf-cache:
+  uv-cache:

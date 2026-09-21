@@ -1,0 +1,26 @@
+{
+  "prompt_id": "frontier_binary_v1",
+  "spec_ref": "§11, §12",
+  "errata_applied": ["E1", "E15"],
+  "base_prompt_file": "binary_v1.txt",
+  "modes": {
+    "enum": {
+      "spec_ref": "§11",
+      "suffix": "Respond with exactly one word, either SUPPORTED or NOT_SUPPORTED.\nNo explanation. No reasoning. No other text.",
+      "label_map": {"SUPPORTED": "SUPPORTED", "NOT_SUPPORTED": "NOT_SUPPORTED"},
+      "native_probability": false
+    },
+    "ab_logprobs": {
+      "spec_ref": "§12, errata E15",
+      "suffix": "Return exactly one character:\nA = SUPPORTED\nB = NOT_SUPPORTED",
+      "label_map": {"A": "SUPPORTED", "B": "NOT_SUPPORTED"},
+      "native_probability": true
+    }
+  },
+  "mode_by_model": {
+    "gpt-6-astra": "enum",
+    "gpt-5.6-sol": "enum",
+    "claude-sonnet-5": "enum"
+  },
+  "mode_rationale": "Errata E15 prescribes ab_logprobs so one call yields both label and probability. Verified live on 2026-09-19 (runs/model_live_check.json): neither required OpenAI model accepts the logprobs parameter, so ab_logprobs would yield no probability while imposing a single-character answer format that differs from Claude's. Spec rule 7 requires the same semantic prompt for every model, so all three frontier models use enum. Revisit at G2A and preregister."
+}

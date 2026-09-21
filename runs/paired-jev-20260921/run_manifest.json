@@ -1,0 +1,30 @@
+{
+  "benchmark_version": "1.0",
+  "concurrency": 12,
+  "credentials_account_note": null,
+  "dataset": {
+    "count": 495,
+    "name": "lytang/LLM-AggreFact",
+    "parquet_sha256": "ca9a5bda9561bbc6f7327ef81ab41727fa10e96f96e9dc74ef32ba3af3c1d8a8",
+    "rows_sha256": "9823b8d4992aa81926593f826cf365e3e8b74bc52a3d61adc5beaf978b462f5f",
+    "selection": "the same 495 example_ids as the paired frontier runs",
+    "split": "dev"
+  },
+  "finished_at_utc": "2026-09-21T15:04:19.403585+00:00",
+  "git_commit": "3dd5af3d8f2955fb1bf1be3b0d7905623febe9fe",
+  "models": {
+    "jev": {
+      "native_probability": true,
+      "requested": "jev-1.13.0"
+    }
+  },
+  "note": "Paired Jev run with a \u00a729 manifest; concurrency matched to the frontier runs.",
+  "pricing_snapshot_sha256": null,
+  "prompt_sha256": "sha256:d490ccd33a4af21cb098a9d489f9dd3b158f9b14ba62af5f2b1227aeeffc3cde",
+  "python_version": "3.12.14",
+  "random_seed": 20260918,
+  "run_id": "paired-jev-20260921",
+  "runner_instance": "beb3bfcf024a",
+  "runner_region": "local",
+  "started_at_utc": "2026-09-21T15:04:09.163937+00:00"
+}

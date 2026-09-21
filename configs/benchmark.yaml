@@ -1,0 +1,51 @@
+# Benchmark-wide configuration (spec §6.1, §14, §16, §17, §18, §19, §31).
+
+benchmark_version: "1.0"
+random_seed: 20260918
+
+dataset:
+  name: lytang/LLM-AggreFact
+  revision: 981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4
+  dev_file: data/dev-00000-of-00001.parquet
+  # The test file is NEVER named to a downloader before the guard unlocks.
+  manifest: data/manifests/aggrefact_revision.json
+  expected:
+    dev_count: 30420
+    test_count: 29320
+    n_component_datasets: 11
+
+split_discipline:
+  dev_uses: [prompt development, threshold selection, smoke tests, calibration policy]
+  test_unlock_requires: benchmark-protocol-v1 pushed to origin   # errata E14
+  guard: src.data.guard:assert_test_split_unlocked
+
+failures:                       # spec §17, errata E17
+  max_retries: 3
+  retry_on: [rate_limited_exhausted, timeout, provider_error]
+  never_retry: [format_error, refusal, context_incompatible]
+  capacity_failures: resumed until they resolve, reported in their own column
+  model_failures_count_as_wrong_in: operational_bacc
+
+context:                        # spec §14, errata E16
+  never_truncate: true
+  build_all_model_comparable_subset: true
+  sensitivity_analysis_if_exclusions_exceed: 0.01
+  measured_dev_distribution:
+    median_tokens_approx: 445
+    p99_tokens_approx: 3449
+    max_tokens_approx: 33653
+    exceeding_jev_32k_state_budget: 1        # 0.003% of dev
+  note: >
+    Approximate word-count proxy measured at G0; exact tokenizer counts are
+    recorded per request before each call (errata E16).
+
+metrics:                        # spec §18
+  headline: mean_balanced_accuracy_across_datasets   # macro, never pooled
+  ece_bins: 10
+  ece_sensitivity_bins: 15
+  logloss_epsilon: 1.0e-15      # PROVISIONAL: preregister the value at G2A
+  bootstrap_resamples: 10000
+
+concurrency:                    # spec §31
+  accuracy_run: 8
+  latency_run: 1                # §32: latency never comes from the bulk run

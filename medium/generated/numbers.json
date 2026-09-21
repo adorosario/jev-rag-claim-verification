@@ -1,0 +1,232 @@
+{
+  "astra": {
+    "ci": [
+      0.6879545930210572,
+      0.7877096227405359
+    ],
+    "cost_per_1k": 8.934545454545454,
+    "fvr": 0.1414141414141414,
+    "mean_bacc": 0.738302531808106,
+    "mean_input_tokens": 843.4242424242424,
+    "mean_output_tokens": 10.006060606060606,
+    "p50_ms": 1478.0278729999736,
+    "p95_ms": 4135.023069300038,
+    "per_dataset": {
+      "AggreFact-CNN": 0.68796992481203,
+      "AggreFact-XSum": 0.6296296296296297,
+      "ClaimVerify": 0.8564189189189189,
+      "ExpertQA": 0.4611486486486487,
+      "FactCheck-GPT": 0.674812030075188,
+      "Lfqa": 0.8184523809523809,
+      "RAGTruth": 0.8780487804878049,
+      "Reveal": 0.8048128342245989,
+      "TofuEval-MediaS": 0.7115384615384616,
+      "TofuEval-MeetB": 0.7913533834586466,
+      "Wice": 0.8071428571428572
+    },
+    "verified_precision": 0.8861788617886179
+  },
+  "astra_high_effort": {
+    "cost_per_1k": 10.699292929292929,
+    "fvr": 0.13131313131313133,
+    "max_completion_tokens": 4096,
+    "mean_bacc": 0.7410884885414312,
+    "mean_output_tokens": 45.3010101010101,
+    "p50_ms": 2133.013635000225,
+    "per_dataset": {
+      "AggreFact-CNN": 0.68796992481203,
+      "AggreFact-XSum": 0.6574074074074074,
+      "ClaimVerify": 0.8564189189189189,
+      "ExpertQA": 0.4611486486486487,
+      "FactCheck-GPT": 0.674812030075188,
+      "Lfqa": 0.8601190476190477,
+      "RAGTruth": 0.8780487804878049,
+      "Reveal": 0.8048128342245989,
+      "TofuEval-MediaS": 0.6858974358974359,
+      "TofuEval-MeetB": 0.7781954887218046,
+      "Wice": 0.8071428571428572
+    },
+    "reasoning_effort": "high",
+    "valid_rate": 1.0,
+    "verified_precision": 0.8925619834710744
+  },
+  "astra_ok": 495,
+  "astra_rows": 495,
+  "astra_valid_rate": 1.0,
+  "cascade": [
+    {
+      "bacc": 0.7327395541243509,
+      "cost_per_1k": 0.04785700606060606,
+      "escalated": 0.0,
+      "threshold": 0.5
+    },
+    {
+      "bacc": 0.7480947922272843,
+      "cost_per_1k": 0.999978218181818,
+      "escalated": 0.10909090909090909,
+      "threshold": 0.7
+    },
+    {
+      "bacc": 0.758224774018538,
+      "cost_per_1k": 1.6341802383838384,
+      "escalated": 0.17373737373737375,
+      "threshold": 0.8
+    },
+    {
+      "bacc": 0.7400695194004524,
+      "cost_per_1k": 2.9500388242424243,
+      "escalated": 0.3111111111111111,
+      "threshold": 0.9
+    },
+    {
+      "bacc": 0.7449209031992045,
+      "cost_per_1k": 4.564665086868687,
+      "escalated": 0.44242424242424244,
+      "threshold": 0.95
+    },
+    {
+      "bacc": 0.7481739853996552,
+      "cost_per_1k": 5.214907511111109,
+      "escalated": 0.5131313131313131,
+      "threshold": 0.97
+    },
+    {
+      "bacc": 0.7530017112800127,
+      "cost_per_1k": 6.427250945454545,
+      "escalated": 0.6484848484848484,
+      "threshold": 0.99
+    }
+  ],
+  "concurrency_note": "Both runs used concurrency 12; per-request latency therefore includes client-side queueing and is NOT a controlled measurement.",
+  "delta": {
+    "ci": [
+      -0.056012023288525656,
+      0.04461010407445906
+    ],
+    "jev_minus_astra_pp": -0.5562977683755133,
+    "mean": -0.005409427780831386
+  },
+  "gating": [
+    {
+      "bacc": 0.7327395541243509,
+      "bacc_pooled": 0.7929292929292929,
+      "coverage": 1.0,
+      "n": 495,
+      "n_datasets_scored": 11,
+      "threshold": 0.5,
+      "verified_precision": 0.8408304498269896
+    },
+    {
+      "bacc": 0.7549713605075578,
+      "bacc_pooled": 0.8272984078068824,
+      "coverage": 0.8909090909090909,
+      "n": 441,
+      "n_datasets_scored": 11,
+      "threshold": 0.7,
+      "verified_precision": 0.8603773584905661
+    },
+    {
+      "bacc": 0.7721228169555286,
+      "bacc_pooled": 0.8486835568802782,
+      "coverage": 0.8262626262626263,
+      "n": 409,
+      "n_datasets_scored": 11,
+      "threshold": 0.8,
+      "verified_precision": 0.8744939271255061
+    },
+    {
+      "bacc": 0.7618608269138716,
+      "bacc_pooled": 0.8630536130536131,
+      "coverage": 0.6888888888888889,
+      "n": 341,
+      "n_datasets_scored": 11,
+      "threshold": 0.9,
+      "verified_precision": 0.8805970149253731
+    },
+    {
+      "bacc": 0.8043327362292879,
+      "bacc_pooled": 0.8849906691548921,
+      "coverage": 0.5575757575757576,
+      "n": 276,
+      "n_datasets_scored": 11,
+      "threshold": 0.95,
+      "verified_precision": 0.912751677852349
+    },
+    {
+      "bacc": 0.8096320346320347,
+      "bacc_pooled": 0.9101178101178101,
+      "coverage": 0.4868686868686869,
+      "n": 241,
+      "n_datasets_scored": 11,
+      "threshold": 0.97,
+      "verified_precision": 0.9354838709677419
+    },
+    {
+      "bacc": 0.8787274453941121,
+      "bacc_pooled": 0.9190705128205128,
+      "coverage": 0.3515151515151515,
+      "n": 174,
+      "n_datasets_scored": 9,
+      "threshold": 0.99,
+      "verified_precision": 0.9710144927536232
+    }
+  ],
+  "generated_from": {
+    "astra": "runs/paired-astra-lowthink-20260921-p2b/predictions_gpt6_astra.jsonl",
+    "dataset": "lytang/LLM-AggreFact dev",
+    "jev": "runs/paired-jev-20260921/predictions_jev.jsonl",
+    "parquet_sha256": "ca9a5bda9561bbc6f7327ef81ab41727fa10e96f96e9dc74ef32ba3af3c1d8a8"
+  },
+  "jev": {
+    "ci": [
+      0.6852294012529562,
+      0.7786052179701075
+    ],
+    "cost_per_1k": 0.04785700606060606,
+    "fvr": 0.23232323232323232,
+    "mean_bacc": 0.7327395541243509,
+    "mean_input_tokens": 1139.4525252525252,
+    "p50_ms": 214.11910300003,
+    "p95_ms": 313.4181550998619,
+    "per_dataset": {
+      "AggreFact-CNN": 0.4868421052631579,
+      "AggreFact-XSum": 0.6759259259259259,
+      "ClaimVerify": 0.847972972972973,
+      "ExpertQA": 0.6047297297297297,
+      "FactCheck-GPT": 0.6484962406015038,
+      "Lfqa": 0.8422619047619048,
+      "RAGTruth": 0.9268292682926829,
+      "Reveal": 0.7286096256684491,
+      "TofuEval-MediaS": 0.6153846153846154,
+      "TofuEval-MeetB": 0.8045112781954887,
+      "Wice": 0.8785714285714286
+    },
+    "verified_precision": 0.8408304498269896
+  },
+  "jev_ok": 495,
+  "jev_rows": 495,
+  "jev_valid_rate": 1.0,
+  "n_datasets": 11,
+  "n_paired": 495,
+  "operational": {
+    "astra_mean_bacc": 0.738302531808106,
+    "jev_mean_bacc": 0.7327395541243509,
+    "n": 495
+  },
+  "paired": {
+    "agreement": 0.8484848484848485,
+    "astra_only_correct": 34,
+    "jev_only_correct": 41,
+    "mcnemar_p": 0.48868297090314317,
+    "mcnemar_statistic": 34.0,
+    "mcnemar_tests": "RAW per-item accuracy pooled over datasets, NOT the macro-averaged balanced accuracy reported in delta.",
+    "raw_accuracy_favors": "jev"
+  },
+  "ratios": {
+    "cost": 186.69252822106662
+  },
+  "raw_accuracy": {
+    "astra": 0.7838383838383839,
+    "jev": 0.797979797979798
+  }
+}

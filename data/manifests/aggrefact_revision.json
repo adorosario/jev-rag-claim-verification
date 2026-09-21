@@ -1,0 +1,40 @@
+{
+  "dev_count": 30420,
+  "dev_file": "data/dev-00000-of-00001.parquet",
+  "dev_parquet_sha256": "ca9a5bda9561bbc6f7327ef81ab41727fa10e96f96e9dc74ef32ba3af3c1d8a8",
+  "dev_rows_sha256": "9823b8d4992aa81926593f826cf365e3e8b74bc52a3d61adc5beaf978b462f5f",
+  "duplicate_example_ids": 46,
+  "duplicate_example_ids_with_conflicting_labels": 5,
+  "duplicate_rows": 96,
+  "example_id_scheme": "split:dataset:sha256(doc\u241fclaim)[:16] (errata E18)",
+  "generated_at_utc": "2026-09-20T13:06:24.319824+00:00",
+  "hf_repo_id": "lytang/LLM-AggreFact",
+  "hf_revision": "981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4",
+  "label_values": [
+    0,
+    1
+  ],
+  "n_component_datasets": 11,
+  "per_dataset_dev_counts": {
+    "AggreFact-CNN": 459,
+    "AggreFact-XSum": 777,
+    "ClaimVerify": 1093,
+    "ExpertQA": 3773,
+    "FactCheck-GPT": 1537,
+    "Lfqa": 2029,
+    "RAGTruth": 15340,
+    "Reveal": 1656,
+    "TofuEval-MediaS": 1800,
+    "TofuEval-MeetB": 1607,
+    "Wice": 349
+  },
+  "spec_expected": {
+    "dev_count": 30420,
+    "n_component_datasets": 11,
+    "test_count": 29320
+  },
+  "spec_mismatches": [],
+  "test_count": 29320,
+  "test_count_source": "datasets-server/size",
+  "test_split_downloaded": false
+}

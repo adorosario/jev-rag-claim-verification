@@ -1,0 +1,45 @@
+[project]
+name = "customgpt-jev-eval"
+version = "0.1.0"
+description = "Jev vs frontier LLMs for grounded claim verification: reproducible benchmark"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  # data
+  "datasets>=3.0",
+  "huggingface-hub>=0.25",
+  "pandas>=2.2",
+  "numpy>=2.0",
+  "pyyaml>=6.0",
+  "python-dotenv>=1.0",
+  # providers
+  # TypeSafe SDK: real package name confirmed at G0 on 2026-09-19.
+  # PyPI "typesafe-sdk", import "typesafe_sdk". Pinned to the 0.7 line; the
+  # response shape recorded in docs/reference/jev-api.md is version-specific.
+  "typesafe-sdk>=0.7,<0.8",
+  "openai>=2.0",
+  "anthropic>=0.60",
+  "httpx>=0.27",
+  # analysis
+  "scipy>=1.13",
+  "scikit-learn>=1.5",
+  "statsmodels>=0.14",
+  "matplotlib>=3.9",
+  "tqdm>=4.66",
+  # third-party timestamps for the preregistration and results locks (errata E23)
+  "opentimestamps-client>=0.7",
+]
+
+[project.optional-dependencies]
+# MiniCheck Flan-T5-Large baseline (spec §7.6); heavy, so install only where it runs
+minicheck = ["torch>=2.4", "transformers>=4.44", "sentencepiece>=0.2"]
+# Runtime deps of the PRODUCTION verifier, which is invoked from a sibling
+prodverifier = ["boto3>=1.35", "json-repair>=0.30", "pydantic>=2.0", "celery>=5.4", "openai>=2.0", "redis>=5.0", "elasticsearch>=8.0", "tenacity>=9.0", "tiktoken>=0.8"]
+
+[dependency-groups]
+dev = ["pytest>=8.3", "pytest-asyncio>=0.24", "ruff>=0.6"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

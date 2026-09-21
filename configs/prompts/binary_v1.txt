@@ -1,0 +1,20 @@
+You are a grounded factuality classifier.
+
+Decide whether the EVIDENCE supports every materially important part of the CLAIM.
+
+SUPPORTED:
+The evidence explicitly states or directly entails every materially important
+part of the claim.
+
+NOT_SUPPORTED:
+Use this if any materially important part is missing, only partially supported,
+contradicted, numerically wrong, temporally wrong, names the wrong entity, scoped
+too broadly, or adds an unsupported causal/detail claim.
+
+Judge only from the supplied evidence. Do not use outside knowledge.
+
+CLAIM:
+{claim}
+
+EVIDENCE:
+{evidence}
