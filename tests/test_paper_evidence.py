@@ -298,13 +298,29 @@ def test_the_draft_is_the_size_the_approved_outline_says():
         assert re.search(rf"^\s*{n}\s+\d+\s+\d+\s", r.stdout, re.M), (
             f"the gate does not report section {n} against a budget:\n{r.stdout}")
 
-    total = re.search(r"^\s+(\d+)\s+(\d+)\s+BODY TOTAL", r.stdout, re.M)
-    assert total, f"the gate no longer reports a body total:\n{r.stdout}"
+    total = re.search(r"^\s+(\d+)\s+(\d+)\s+SECTIONS 1\.\.N", r.stdout, re.M)
+    assert total, f"the gate no longer reports a section total:\n{r.stdout}"
     words, budget = int(total.group(1)), int(total.group(2))
     assert budget == 7600, "the outline's section budgets sum to 7600 words"
     assert words <= int(budget * 1.10), (
-        f"the body is {words} words against the outline's {budget}; cut prose or move "
-        f"disclosure detail into the appendices")
+        f"sections 1..N are {words} words against the outline's {budget}; cut prose or "
+        f"move disclosure detail into the appendices")
+
+    # The two sides of that comparison must be drawn from the same rows. The gate used to
+    # add the abstract's words to a budget that is the sum of the SECTION rows, and the
+    # outline gives the abstract no budget at all, so for several rounds sections 1..N were
+    # held to roughly 260 words less than the approved outline allows and prose was cut to
+    # meet a number nobody approved. The abstract is still hard-gated, on arXiv's published
+    # 1920-character limit, which is a different unit and a different gate.
+    abstract_row = re.search(r"^\s*-\s+(\d+)\s+-\s+abstract", r.stdout, re.M)
+    assert abstract_row, f"the gate must still report the abstract's length:\n{r.stdout}"
+    assert "not charged" in r.stdout, (
+        "the abstract must be reported as not charged against the section budgets, so a "
+        "reader of this output cannot mistake one budget for the other")
+    assert int(abstract_row.group(1)) > 0
+    assert "ABSTRACT_LIMIT = 1920" in (REPO / "scripts/verify/check_paper_macros.py").read_text(), (
+        "the abstract's own limit has to stay enforced somewhere, or excluding it here "
+        "would leave it unguarded")
     assert r.returncode == 0, r.stdout
 
 
@@ -1544,3 +1560,49 @@ def test_the_separated_count_is_a_macro_everywhere_and_never_a_word():
         raise AssertionError(
             f"the separated count is spelled as a word: {m.group(0)!r}. Say \"of them\" "
             "or print \\NClearingUncorrected")
+
+
+def test_the_cascade_is_priced_against_the_cheap_tier_wherever_it_is_recommended():
+    """The cascade was framed against the expensive frontier arm in the abstract, in
+    Section 11.2 and in the conclusion, and against the cheap tier it is built from only
+    in Section 9.4, which opens by conceding that the frontier comparison is "the
+    comparison that flatters it" and then reports that the cascade costs
+    \\CostRatioCascadeOverJev-fold what Jev alone costs for an accuracy difference whose
+    interval contains zero. A reader of the abstract alone, which on arXiv is most
+    readers, came away recommending an architecture Section 9.4 declines to recommend,
+    and Section 11.2 was headed "Route rather than replace" with nothing in it to say
+    which arm routing beats.
+
+    So the three most-read places must each carry the non-flattering comparison: the cost
+    ratio against Jev alone and the interval on that accuracy difference. Both are
+    already macros, so this costs the paper nothing but the sentence."""
+    src = _paper_sources()
+    main = src["main.tex"]
+    close = src["sections/close.tex"]
+
+    abstract = re.search(r"\\begin\{abstract\}(.*?)\\end\{abstract\}", main, re.S)
+    assert abstract, "no abstract to check"
+    discussion = re.search(r"\\section\{Discussion\}(.*?)\\section\{", close, re.S)
+    assert discussion, "Section 11 is no longer where this test looks for it"
+    conclusion = re.search(r"\\section\{Conclusion\}(.*?)\\appendix", close, re.S)
+    assert conclusion, "Section 13 is no longer where this test looks for it"
+
+    for where, text in (("the abstract", abstract.group(1)),
+                        ("Section 11 (Discussion)", discussion.group(1)),
+                        ("Section 13 (Conclusion)", conclusion.group(1))):
+        flat = re.sub(r"\s+", " ", text)
+        for macro in ("CostRatioCascadeOverJev", "CascadeJevDeltaCILo",
+                      "CascadeJevDeltaCIHi"):
+            assert re.search(r"\\" + macro + r"(?![A-Za-z])", flat), (
+                f"{where} recommends the cascade without printing \\{macro}, so it makes "
+                "only the comparison Section 9.4 calls the one that flatters it")
+
+    # And the two places that give advice say which arm routing beats, rather than
+    # leaving a heading that reads as advice to prefer it over anything.
+    close_flat = re.sub(r"\s+", " ", close)
+    assert "\\subsection{Route rather than replace}" not in close_flat, (
+        "the Section 11.2 heading recommends routing without naming the arm it beats")
+    assert "over Jev alone it is not justified on this sample" in close_flat, (
+        "Section 11.2 must state that routing is not justified over replacing here")
+    assert "it replaces the frontier model, not the cheap tier" in close_flat, (
+        "Section 13 must say which of the two arms the cascade replaces")

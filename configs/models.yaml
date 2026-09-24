@@ -36,7 +36,9 @@ models:
     settings:
       reasoning_effort: low
       temperature: provider_default
-      max_completion_tokens: 16
+      max_completion_tokens:
+        low: 256
+        high: 4096
       tools: none
     verified:
       exists: true
@@ -45,6 +47,18 @@ models:
     notes:
     - "Errata E15: the API rejects the logprobs parameter outright, so \xA712's A/B probability method\
       \ is unavailable. Table 3 shows N/A."
+    - 'This entry read max_completion_tokens: 16 until 2026-09-24. That is the cap of the discarded first
+      paired pass, where the model''s internal reasoning consumed the whole budget and 84 of 495 claims
+      came back with no answer (incident log, 2026-09-21). The cap was raised and the pass repeated, but
+      only in the run scripts, so the registry the paper sends a reader to for reproduction still advertised
+      the broken value while the paper''s own appendices said it had been fixed. The values above are
+      now the ones the reported runs sent.'
+    - 'max_completion_tokens is declared per reasoning effort because the two reported configurations
+      do not share one value, so a scalar here could only ever be right for one of them. Both values are
+      what the reported runs actually sent, read out of their run_manifest.json, and tests/test_model_registry.py
+      fails if either drifts from its manifest. This note is a note and not a YAML comment on purpose:
+      the public export is re-serialised with yaml.safe_dump, which drops every comment, so an explanation
+      written as a comment is one the published registry loses.'
   gpt56_sol:
     provider: openai
     model_id: gpt-5.6-sol
@@ -61,6 +75,11 @@ models:
       exists: true
       reported_id: gpt-5.6-sol
       logprobs_supported: false
+    notes:
+    - 'No run reported in the paper uses this model: it was registered and live-checked and never became
+      an arm, so its max_completion_tokens of 16 is untested at task length. It is the same value that
+      wiped 84 of 495 answers for gpt6_astra above, and it is left as registered rather than quietly raised,
+      because nothing here measured a replacement.'
   claude_sonnet5:
     provider: anthropic
     model_id: claude-sonnet-5

@@ -296,6 +296,12 @@ RELATIONS = [
     (("OracleBAcc", "OracleBAccTwoDP"), JEV_BACC, ("OracleHeadroomPP",), "diff"),
     (("CascadeAtNinetyNineBAcc", "CascadeAtNinetyNineBAccTwoDP"), ASTRA_BACC,
      ("CascadeAtNinetyNineMinusAstraPP",), "diff"),
+    # The random-escalation control against the frontier arm. Section 9.5 prints the
+    # control's level, the frontier arm's level and the difference in one paragraph,
+    # which is exactly the arithmetic a reader checks when a paper says two things do
+    # not separate.
+    (("RandomAtNinetyBAcc", "RandomAtNinetyBAccTwoDP"), ASTRA_BACC,
+     ("RandomVsAstraDeltaPP",), "diff"),
     # The same guard penalty, recomputed against the run the prompt correction replaced.
     # Section 12 prints it beside the reported one, so the two must be differences of the
     # same minuend against the two spellings of the comparator arm.

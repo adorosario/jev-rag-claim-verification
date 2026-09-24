@@ -1981,17 +1981,21 @@ def main() -> int:
              "not an achievable operating point",
     )
     controls = []
+    random_preds_by_threshold: dict[float, np.ndarray] = {}
     for g in in_sample:
         rate = g["escalated"]
         if rate == 0.0:
             continue
         rng_c = np.random.default_rng(seed)
-        rand_b, rand_c = [], []
+        rand_b, rand_c, rand_preds = [], [], []
         for _ in range(N_REPEATS):
             conf = rng_c.random(len(df)) >= rate     # escalate a random `rate` share
-            rand_b.append(macro_bacc_arr(gold_a, np.where(conf, jev_a, astra_a), ds_a))
+            pred = np.where(conf, jev_a, astra_a)
+            rand_b.append(macro_bacc_arr(gold_a, pred, ds_a))
             rand_c.append(cascade_cost_per_1k(conf))
+            rand_preds.append(pred.copy())
         rand_b = np.array(rand_b)
+        random_preds_by_threshold[g["threshold"]] = np.array(rand_preds)
         controls.append(dict(
             threshold=g["threshold"], escalated=rate,
             confidence_macro_bacc=g["macro_bacc"],
@@ -2001,6 +2005,35 @@ def main() -> int:
             confidence_minus_random_pp=float((g["macro_bacc"] - rand_b.mean()) * 100),
             clears_random_ci=bool(g["macro_bacc"] > float(np.percentile(rand_b, 97.5))),
         ))
+
+    # The random control against the frontier arm, under the SAME two instruments the
+    # separation criterion names, because Section 9.5 invokes that criterion by name to
+    # license a claim about the control.
+    #
+    # What was there before was a percentile band over routing DRAWS, on the control's own
+    # LEVEL, and the argument was that the band happened to cover the frontier arm's point
+    # estimate. That is interval-overlap on two levels, which is the confusion Table 1's
+    # caption exists to prevent, and the criterion at Section 5 is a paired bootstrap on
+    # the DIFFERENCE plus an exact McNemar. Neither was computed.
+    #
+    # Both are computed here, and no new inference is needed: each random draw is a
+    # complete prediction vector over the same claims, which is exactly the shape the
+    # cross-fitted cascade's own comparison consumes, so the control goes through the same
+    # function as every other comparison in the paper. Cycling the draws through the
+    # bootstrap carries the routing noise the same way cycling folds carries fold noise.
+    #
+    # It runs at the budget the prose leans on, which is the one nearest the reported
+    # operating point. A budget the paper does not argue from does not need the machinery.
+    nearest = min(random_preds_by_threshold, key=lambda t: abs(t - 0.90))
+    random_vs_astra = cascade_vs_arm_inference(
+        df, random_preds_by_threshold[nearest], n_boot, seed, "astra")
+    random_vs_astra["threshold"] = nearest
+    random_vs_astra["note"] = (
+        "the random-escalation control at the budget nearest the reported operating "
+        "point, against the frontier arm, under the separation criterion of section 5: a "
+        "95% paired stratified bootstrap on the macro-balanced-accuracy DIFFERENCE, "
+        "cycling the random draws so routing noise is carried, and an exact McNemar per "
+        "draw. Replaces an interval-overlap argument between two levels.")
 
     # ---- complementarity headline ------------------------------------------------
     ja = pairs["jev|astra"]
@@ -2194,7 +2227,8 @@ def main() -> int:
         operational=operational,
         gating=gating,
         cascade=dict(in_sample_sweep=in_sample, in_sample_best=best_in,
-                     crossfit=crossfit, random_control=controls, oracle=oracle),
+                     crossfit=crossfit, random_control=controls,
+                     random_vs_astra_inference=random_vs_astra, oracle=oracle),
         ratios=dict(cost_astra_over_jev=float(astra_cost / jev_cost),
                     cost_astra_high_over_jev=float(astra_high_cost / jev_cost),
                     cost_astra_over_crossfit_cascade=crossfit["cost_ratio_astra_over_crossfit"]),
@@ -2527,6 +2561,14 @@ def write_tex(out: dict) -> None:
     m.add("SamePromptRepeatBAcc", sp["capped_macro_bacc"] * 100, "{:.2f}")
     m.add("SamePromptRepeatBAccOther", sp["repeat_macro_bacc"] * 100, "{:.2f}")
     m.add("SamePromptRepeatDeltaPP", sp["macro_bacc_delta_pp"], "{:.2f}")
+    # The two reported frontier configurations' completion-token caps, read off their own
+    # run manifests. They differ, and the effort ablation therefore varies two things, so
+    # section 4 has to print both rather than the reader meeting the difference for the
+    # first time in the published registry.
+    for arm, key in (("Astra", "astra"), ("AstraHigh", "astra_high")):
+        m.add(f"{arm}TokenCap", int(json.loads(
+            (RUN_FILES[key].parent / "run_manifest.json").read_text()
+        )["models"]["gpt6_astra"]["max_completion_tokens"]), "{:d}")
     m.add("SamePromptRepeatCappedTokenCap", sp["capped_max_completion_tokens"], "{:d}")
     m.add("SamePromptRepeatTokenCap", sp["repeat_max_completion_tokens"], "{:d}")
     # What the repeat covers. These are the macros that stop the zero-flip result being
@@ -2788,12 +2830,26 @@ def write_tex(out: dict) -> None:
         m.add(f"RandomAt{t}CIHi", c["random_macro_bacc_ci"][1] * 100)
         m.add(f"RandomAt{t}CILoTwoDP", c["random_macro_bacc_ci"][0] * 100, "{:.2f}")
         m.add(f"RandomAt{t}CIHiTwoDP", c["random_macro_bacc_ci"][1] * 100, "{:.2f}")
+        # The control's own bill. Without it the control could only be read as a test of
+        # the accuracy gain, which is how Section 9.6 used to read it, and the cost half
+        # of the headline went unchallenged: random escalation at a matched budget buys
+        # a matched bill, so the cost result is a property of the escalation share rather
+        # than of the probability that chooses it. That sentence needs this number.
+        m.add(f"RandomAt{t}Cost", c["random_cost_per_1k_usd_mean"], "{:.2f}")
         # Two decimals across the whole gain column, because it is the difference of the
         # two columns printed beside it and at one decimal the t=0.90 row did not
         # reproduce: 74.0 minus 73.4 is 0.6 and the gain printed 0.7. Every row reproduces
         # at two.
         m.add(f"ConfMinusRandomAt{t}PP", c["confidence_minus_random_pp"], "{:.2f}")
     m.add("NRandomBudgetsTested", len(out["cascade"]["random_control"]), "{:d}")
+
+    # The control measured against the frontier arm by the criterion section 9.5 invokes.
+    rva = out["cascade"]["random_vs_astra_inference"]
+    m.add("RandomVsAstraDeltaPP", rva["macro_bacc_delta_pp"], "{:.2f}")
+    m.add("RandomVsAstraDeltaCILo", rva["macro_bacc_delta_ci_pp"][0], "{:.2f}")
+    m.add("RandomVsAstraDeltaCIHi", rva["macro_bacc_delta_ci_pp"][1], "{:.2f}")
+    m.add("RandomVsAstraMcNemarPMedian", rva["mcnemar_p_median"], "{:.2f}")
+    m.add("RandomVsAstraRepeatsPBelowFive", rva["n_repeats_p_below_05"], "{:d}")
     m.add("NRandomBudgetsConfidenceWins",
           sum(1 for c in out["cascade"]["random_control"]
               if c["confidence_minus_random_pp"] > 0), "{:d}")

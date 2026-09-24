@@ -436,7 +436,51 @@
         "random_macro_bacc_mean": 0.7358567292826309,
         "threshold": 0.99
       }
-    ]
+    ],
+    "random_vs_astra_inference": {
+      "direction_note": "n_repeats_mcnemar_favours_* counts the sign of the discordant split per repeat (ties are in neither count); n_repeats_macro_below_arm counts repeats whose MACRO balanced accuracy is below the arm. The two answer different questions and a sentence about 'direction' has to say which one it means.",
+      "frac_bootstrap_draws_negative": 0.5676,
+      "frac_repeats_p_below_05": 0.005,
+      "fvr_inference": {
+        "fvr_delta_boot_mean_pp": 6.364444444444445,
+        "fvr_delta_ci_pp": [
+          2.0202020202020203,
+          11.11111111111111
+        ],
+        "fvr_delta_pp": 6.376262626262625,
+        "mcnemar_p_max": 0.1795654296875,
+        "mcnemar_p_median": 0.004384279251098633,
+        "mcnemar_p_min": 7.62939453125e-06,
+        "n_discordant_median": 18.0,
+        "n_gold_unsupported": 198,
+        "n_repeats_favouring_cascade": 0,
+        "n_repeats_p_below_05": 192,
+        "n_repeats_p_below_05_favouring_cascade": 0,
+        "note": "paired stratified bootstrap over the gold-unsupported claims and an exact McNemar on the discordant false-verification pairs, one test per cross-fitting repeat. Negative fvr_delta_pp means the cascade false-verifies LESS than the comparison arm. Same estimand as complementarity.fvr_gap_inference, which is the pooled rate."
+      },
+      "interval_note": "paired stratified bootstrap over the 495 claims, cycling through the assembled out-of-fold cascade predictions so the interval carries both sampling and fold-assignment noise. THIS is a confidence interval on the difference; cascade.crossfit.minus_astra_pp_ci is not.",
+      "macro_bacc_delta_boot_mean_pp": -0.47134058408740953,
+      "macro_bacc_delta_ci_pp": [
+        -5.441239244403995,
+        4.409612724455605
+      ],
+      "macro_bacc_delta_pp": -0.47464762664079846,
+      "mcnemar_p_max": 1.0,
+      "mcnemar_p_median": 0.6272555142330322,
+      "mcnemar_p_min": 0.04887389231827033,
+      "mcnemar_statistic_median": 24.0,
+      "n_discordant_median": 52.0,
+      "n_repeats": 200,
+      "n_repeats_macro_below_arm": 138,
+      "n_repeats_mcnemar_favours_arm": 22,
+      "n_repeats_mcnemar_favours_cascade": 170,
+      "n_repeats_p_below_05": 1,
+      "n_repeats_p_below_05_favouring_cascade": 1,
+      "n_resamples": 10000,
+      "note": "the random-escalation control at the budget nearest the reported operating point, against the frontier arm, under the separation criterion of section 5: a 95% paired stratified bootstrap on the macro-balanced-accuracy DIFFERENCE, cycling the random draws so routing noise is carried, and an exact McNemar per draw. Replaces an interval-overlap argument between two levels.",
+      "test_note": "exact McNemar on RAW per-item accuracy pooled over datasets, one test per cross-fitting repeat, NOT on the macro-averaged balanced accuracy",
+      "threshold": 0.9
+    }
   },
   "complementarity": {
     "agreement": 0.8484848484848485,

@@ -158,7 +158,8 @@ without, in its first draft, saying that the authors had done it in public first
 article. What was missing was the disclosure: Appendix C claimed to hold the same set of
 entries as this log while neither document mentioned that the retracted operating point is
 already in circulation under the authors' names. Appendix C now carries the entry, this is
-its counterpart, and the two are the same set of seven.
+its counterpart, and the two are the same set (eight, with the release defect logged
+below).
 
 **Also true of the published article, and not corrected there.** It predates the
 escalation-rule fix, so its t=0.90 sweep row reads 31.1% and $2.95 where this log records
@@ -168,3 +169,42 @@ corrected document and says so.
 
 **Caught by.** A D3 verifier, by reading the published article against the paper's own
 Section 10.
+
+## 2026-09-24: the published package carried the superseded registry, and the release check answered PASS
+
+**What happened.** `configs/models.yaml` was corrected at 17:01:55 UTC on 2026-09-24 to
+carry both completion-token caps per reasoning effort, 256 and 4096, taken from the
+reported runs' manifests, plus a note naming the token-cap incident at the top of this log
+and a line recording that the high-effort configuration of the older model never became an
+arm. The public reproduction package at `github.com/adorosario/jev-rag-claim-verification`
+had last been built and pushed at 15:44 UTC, 77 minutes before that correction. From then
+until the next push, a reader who followed Appendix D of the preprint to the pinned model
+registry read `max_completion_tokens: 16` with no note: the cap of the discarded first pass
+that the first entry of this log records as the cause of 84 failures in 495 answers.
+
+Three further artefacts in that same package were the pre-correction copies.
+`scripts/verify/check_public_release.sh`, which Appendix D offers as the reader-side check
+of the package's inventory, was published in its earlier form, which fetched each path and
+compared only the HTTP status; a stale export answers 200 on every path, so it printed
+`PASS: all 45 artefacts the paper names are public` against the superseded registry it was
+supposed to catch. `tests/test_paper_evidence.py` was the superseded copy, and
+`tests/test_model_registry.py`, the guard added with the registry correction, was absent
+from the package, which made it one of the paths the gate's own list names and a reader
+cannot fetch.
+
+**Impact on results: none. Impact on the release: three sentences of the paper were false
+at the reader's end.** No number moves: the caps are documentation of runs that were
+locked and hashed before the correction, and the correction changed no prediction. What was
+wrong was the package the paper sends a reader to, which is the artefact the paper's
+reproducibility claim rests on.
+
+**Fix.** Two, and only the first is code. The reader-side check now compares each published
+file by sha256 against the copy in the checkout it is run from, so a stale export fails
+instead of reporting a status, and the gate carries this failure mode in its own header
+comment. Second, the package is rebuilt with `scripts/build_public_export.sh` and
+republished, and that check has to exit 0 before the preprint is submitted; no agent
+performs the push (CLAUDE.md rule 12). The check is the release gate rather than a
+formality: it is what turned a PASS into a FAIL here.
+
+**Caught by.** A D3 verifier fetching the published files themselves rather than reading
+our export log, twice, over two review rounds.
