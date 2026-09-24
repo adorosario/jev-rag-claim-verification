@@ -1,0 +1,14 @@
+{
+  "run_id": "paired-minicheck-20260922",
+  "model": "lytang/MiniCheck-Flan-T5-Large",
+  "revision_pinned": true,
+  "n": 495,
+  "wall_clock_s": 996.0,
+  "hardware": {
+    "device": "cpu",
+    "torch": "2.14.0+cu130",
+    "threads": 14
+  },
+  "api_cost_usd": 0.0,
+  "note": "same 495 paired example ids as jev and gpt-6-astra"
+}

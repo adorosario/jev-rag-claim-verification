@@ -1,0 +1,12 @@
+{
+  "algorithm": "sha256",
+  "generator": "scripts/verify/paired_analysis.py",
+  "inputs": {
+    "data/manifests/llm_aggrefact_published_leaderboard.json": "d8923fc6035b100257073b84e791617731d9cc4b339d279d5ea494cf4fa81831",
+    "runs/explore-jev-dev/jev_dev_sample.jsonl": "99c7d846633bc0c1b8951b328f2ef6a27103d3dd45447d39a2f86fb3d871a146",
+    "runs/paired-astra-highthink-20260921/predictions_gpt6_astra.jsonl": "4509ff2d65be992aa8a80bd961eb8a329ae8c0114c295cad981c1997cf9336f2",
+    "runs/paired-astra-vs-jev-20260921-v2/predictions_gpt6_astra.jsonl": "9e771236b934e77cf1c3613fb5e2c2bae3059f626ae8a6acdf52b24452274d81",
+    "runs/paired-astra-vs-jev-20260921/predictions_gpt6_astra.jsonl": "8a929605bb8cf2eb07b1fb6f93f9e9228c9c470721f2762d0cbcfd546a1609b4"
+  },
+  "what": "sha256 of supporting inputs that are NOT part of the timestamped evidence lock. The prediction files and the dataset parquet are in raw_hashes.json, which is stamped and must not change; these are recorded for reproducibility only."
+}

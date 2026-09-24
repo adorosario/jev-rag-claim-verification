@@ -1,76 +1,150 @@
 #!/usr/bin/env python3
-"""Check that every claim in medium/article.md matches medium/generated/numbers.json.
+"""Check the published article against medium/generated/numbers.json.
 
-Publishing a number that the raw data does not support is the failure mode this
-repo exists to prevent (CLAUDE.md rule 4). Run before publishing.
+Publishing a number the raw data does not support is the failure this repo exists
+to prevent (CLAUDE.md rule 4). There are two kinds of number in the article and
+each gets its own guarantee:
+
+* **Quoted in prose** -> the exact formatted value must appear in the text.
+* **Shown in a figure** -> figures are rendered from this same numbers.json by
+  scripts/make_article_figures.js, so they cannot drift. What is checked is that
+  every figure exists, is referenced, and was rebuilt AFTER the data changed.
+
+    docker compose run --rm dev uv run python scripts/verify/check_article_numbers.py
+
+The default target is the article AS PUBLISHED. It used to be medium/article.md, the
+unpublished v1 draft, which the public export withdraws because it makes an accuracy
+claim the paper declines to make: so the one command the released README tells a reader
+to run died on a missing file in the published repository, which nothing caught, because
+the release check verifies that files are present and not that the commands work.
+
+The figure checks that need the PNGs run only where the PNGs are. The export ships the
+article and its numbers but not the rendered figures, which live in the published Medium
+post, so there the file checks are skipped and said to be skipped. The checks that read
+the article text alone always run.
 """
-import json, re, sys
+import json
+import sys
 from pathlib import Path
+
 REPO = Path(__file__).resolve().parents[2]
 d = json.loads((REPO / "medium/generated/numbers.json").read_text())
-art = (REPO / "medium/article.md").read_text()
-bad, checked = [], 0
-
-def chk(label, expected, fmt="{:.1f}", present=True):
-    """Assert the formatted value appears (or does not appear) in the article."""
-    global checked
-    s = fmt.format(expected); checked += 1
-    if (s in art) != present:
-        bad.append(f"{label}: expected {'to find' if present else 'NOT to find'} '{s}' in the article")
+ARTICLE = sys.argv[1] if len(sys.argv) > 1 else "medium/article-v3.md"
+art = (REPO / ARTICLE).read_text()
+bad: list[str] = []
+checked = 0
 
 j, a, h = d["jev"], d["astra"], d["astra_high_effort"]
-chk("jev bacc", j["mean_bacc"] * 100); chk("astra bacc", a["mean_bacc"] * 100)
+
+
+# Values the PUBLISHED article carries that the current data no longer produces, each
+# with the reason and the log entry that records it. The article is frozen: it went out
+# under the first author's byline before the preprint, and it cannot be quietly edited to
+# agree with data that moved afterwards. So a divergence here is reported and named, not
+# silenced, and a label whose value has come back into agreement fails, because a list of
+# known divergences that outlives the divergence is how a stale exception becomes a lie.
+SUPERSEDED = {
+    "cascade 0.90 cost": (
+        "2.95",
+        "the escalation rule in the code was not the rule the paper states, and fixing it "
+        "moved the cascade costs by about a cent; the published figure predates the fix. "
+        "See docs/reference/incident-log.md, 'the cascade escalation rule was not the one "
+        "the paper stated', and Appendix C of the preprint. The article's whole cascade "
+        "operating point is superseded by the preprint's cross-fitted one, which is the "
+        "subject of its own entry in the same log."),
+}
+superseded_seen: list[str] = []
+
+
+def chk(label, expected, fmt="{:.1f}"):
+    """The formatted value must appear verbatim in the article text."""
+    global checked
+    checked += 1
+    s = fmt.format(expected)
+    if s not in art:
+        if label in SUPERSEDED:
+            published, why = SUPERSEDED[label]
+            if published in art:
+                superseded_seen.append(f"{label}: the article says {published}, the data "
+                                       f"now gives {s}. {why}")
+                return
+            bad.append(f"{label}: '{s}' is not in the article, and neither is the "
+                       f"superseded value '{published}' this check expected to find")
+            return
+        bad.append(f"{label}: '{s}' is not in the article")
+
+
+# --- numbers quoted in the prose -------------------------------------------------
+chk("jev bacc", j["mean_bacc"] * 100)
+chk("astra bacc", a["mean_bacc"] * 100)
 chk("astra high bacc", h["mean_bacc"] * 100)
-chk("jev ci lo", j["ci"][0] * 100); chk("jev ci hi", j["ci"][1] * 100)
-chk("astra ci lo", a["ci"][0] * 100); chk("astra ci hi", a["ci"][1] * 100)
 chk("delta", abs(d["delta"]["jev_minus_astra_pp"]))
-chk("delta ci lo", abs(d["delta"]["ci"][0] * 100)); chk("delta ci hi", d["delta"]["ci"][1] * 100)
+chk("delta ci lo", abs(d["delta"]["ci"][0] * 100))
+chk("delta ci hi", d["delta"]["ci"][1] * 100)
 chk("mcnemar p", d["paired"]["mcnemar_p"], "{:.2f}")
 chk("agreement", d["paired"]["agreement"] * 100)
 chk("jev only correct", d["paired"]["jev_only_correct"], "{:d}")
 chk("astra only correct", d["paired"]["astra_only_correct"], "{:d}")
-chk("jev cost", j["cost_per_1k"], "{:.3f}"); chk("astra cost", a["cost_per_1k"], "{:.2f}")
+chk("jev cost", j["cost_per_1k"], "{:.3f}")
+chk("astra cost", a["cost_per_1k"], "{:.2f}")
 chk("astra high cost", h["cost_per_1k"], "{:.2f}")
 chk("cost ratio", d["ratios"]["cost"], "{:.0f}")
-if "latency_p50" in d["ratios"]:
-    bad.append("numbers.json still exposes a latency ratio; the runs were not a controlled measurement")
-chk("jev p50", j["p50_ms"], "{:.0f}"); chk("raw acc jev", d["raw_accuracy"]["jev"] * 100); chk("raw acc astra", d["raw_accuracy"]["astra"] * 100)
-chk("astra p50", a["p50_ms"], "{:,.0f}"); chk("astra high p50", h["p50_ms"], "{:,.0f}")
+chk("jev p50", j["p50_ms"], "{:.0f}")
+chk("astra p50", a["p50_ms"], "{:,.0f}")
+chk("astra high p50", h["p50_ms"], "{:,.0f}")
+chk("jev fvr", j["fvr"] * 100)
+chk("astra fvr", a["fvr"] * 100)
+chk("n paired", d["n_paired"], "{:d}")
+chk("raw accuracy jev", d["raw_accuracy"]["jev"] * 100)
+chk("raw accuracy astra", d["raw_accuracy"]["astra"] * 100)
 chk("jev mean input tokens", j["mean_input_tokens"], "{:,.0f}")
 chk("astra mean input tokens", a["mean_input_tokens"], "{:,.0f}")
-chk("astra mean output tokens", a["mean_output_tokens"], "{:.0f}")
-chk("astra high mean output tokens", h["mean_output_tokens"], "{:.0f}")
-chk("jev fvr", j["fvr"] * 100); chk("astra fvr", a["fvr"] * 100); chk("astra high fvr", h["fvr"] * 100)
-chk("jev vprec", j["verified_precision"] * 100); chk("astra vprec", a["verified_precision"] * 100)
-chk("astra high vprec", h["verified_precision"] * 100)
-chk("n paired", d["n_paired"], "{:d}")
+chk("jev AggreFact-CNN", j["per_dataset"]["AggreFact-CNN"] * 100)
+chk("gating 0.99 precision", [g for g in d["gating"] if g["threshold"] == 0.99][0]["verified_precision"] * 100)
+cas90 = [c for c in d["cascade"] if c["threshold"] == 0.9][0]
+chk("cascade 0.90 escalated", cas90["escalated"] * 100, "{:.0f}")
+chk("cascade 0.90 bacc", cas90["bacc"] * 100)
+chk("cascade 0.90 cost", cas90["cost_per_1k"], "{:.2f}")
 
-for ds, v in j["per_dataset"].items():
-    chk(f"jev per-dataset {ds}", v * 100)
-for ds, v in a["per_dataset"].items():
-    chk(f"astra per-dataset {ds}", v * 100)
+if "latency_p50" in d["ratios"]:
+    bad.append("numbers.json exposes a latency ratio; those runs were not a controlled measurement")
 
-for g in d["gating"]:
-    if g["threshold"] in (0.5, 0.9, 0.95, 0.99):   # the 0.80 row is not published
-        chk(f"gate {g['threshold']} coverage", g["coverage"] * 100, "{:.0f}")
-        chk(f"gate {g['threshold']} bacc", g["bacc"] * 100)
-        chk(f"gate {g['threshold']} vprec", g["verified_precision"] * 100)
-for c in d["cascade"]:
-    if c["threshold"] in (0.9, 0.95):
-        chk(f"cascade {c['threshold']} escalated", c["escalated"] * 100, "{:.0f}")
-        chk(f"cascade {c['threshold']} bacc", c["bacc"] * 100)
-        chk(f"cascade {c['threshold']} cost", c["cost_per_1k"], "{:.2f}")
+# --- numbers shown in figures ----------------------------------------------------
+FIGURES = ["headline", "cost", "per-dataset", "gating", "cascade"]
+nums_mtime = (REPO / "medium/generated/numbers.json").stat().st_mtime
+have_figures = (REPO / "medium/figures").is_dir()
+if not have_figures:
+    print("medium/figures is absent, so the figure files are not checked here: the "
+          "rendered figures live in the published Medium post, not in this package. "
+          "The checks below that read the article text still run.")
+for name in FIGURES:
+    checked += 1
+    p = REPO / f"medium/figures/{name}.png"
+    if have_figures:
+        if not p.is_file():
+            bad.append(f"figure {name}.png is missing")
+        elif p.stat().st_mtime < nums_mtime:
+            bad.append(f"figure {name}.png is older than numbers.json: re-run scripts/make_article_figures.js")
+    if f"figures/{name}.png" not in art:
+        bad.append(f"figure {name}.png is not referenced by the article")
+if art.count("![") != len(FIGURES):
+    bad.append(f"the article embeds {art.count('![')} images but {len(FIGURES)} figures are expected")
+if "|---" in art:
+    bad.append("a markdown table survives in the article; Medium does not render them, so it must be a figure")
 
-# numbers that must NOT survive from earlier, discarded runs
-for stale in ("411", "84 of 495 failed", "17%"):
-    if stale in art and stale != "411":
-        bad.append(f"stale string from the discarded v1 run appears: '{stale}'")
+for label in SUPERSEDED:
+    if label not in [t.split(":")[0] for t in superseded_seen]:
+        bad.append(f"{label} is listed as superseded but did not diverge. Remove it from "
+                   "SUPERSEDED: the list must not outlive the divergence it records")
 
-print(f"checked {checked} values against numbers.json")
+print(f"checked {checked} values and figures against numbers.json")
+if superseded_seen:
+    print("\nSUPERSEDED, recorded rather than silenced:")
+    for t in superseded_seen:
+        print(" -", t)
 if bad:
-    print("\nMISMATCHES:"); [print(" -", b) for b in bad]
-    return_code = 1
-else:
-    print("all checked values match the data")
-    return_code = 0
-sys.exit(return_code)
+    print("\nMISMATCHES:")
+    for b in bad:
+        print(" -", b)
+    sys.exit(1)
+print("article matches the data")

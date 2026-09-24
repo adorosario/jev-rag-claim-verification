@@ -1,0 +1,8 @@
+# Evidence snapshots are hashed, so git must store their bytes EXACTLY as
+# fetched. Without `-text`, git normalizes CRLF to LF on commit and a fresh
+# clone then fails its own sha256 integrity check.
+legal/typesafe-mca-snapshot-*      -text
+legal/*.sha256                     -text
+data/pricing_snapshots/*           -text
+data/manifests/*.ots               -text binary
+results/raw/**                     -text

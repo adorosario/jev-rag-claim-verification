@@ -1,0 +1,117 @@
+verified_on: 2026-09-20
+verification_artifact: runs/model_live_check.json
+service_tier: standard
+models:
+  jev:
+    provider: typesafe
+    model_id: jev-1.13.0
+    adapter: src.models.jev:JevAdapter
+    prompt: configs/prompts/jev_grounding_v1.json
+    native_probability: true
+    probability_source: probabilities["supported"]
+    secondary_signals:
+    - confidence
+    settings:
+      sdk: typesafe-sdk==0.7.0
+      retry_policy: max_retries=0
+      timeout_s: 120
+    verified:
+      exists: true
+      reported_id: jev-1.13.0
+      alias_jev_latest_resolves_to: jev-1.13.0
+      probabilities_sum_to_one: true
+    notes:
+    - "Probabilities are quantized to 2dp and saturate at exactly 0.0/1.0 in roughly 60% of sampled cases.\
+      \ \xA718.4 negative log loss therefore needs a clipping epsilon, to be preregistered at G2A. Brier\
+      \ is unaffected."
+    - The SDK default model is the moving alias jev-latest, so the version is always passed explicitly
+      (errata E9).
+  gpt6_astra:
+    provider: openai
+    model_id: gpt-6-astra
+    adapter: src.models.openai_adapter:OpenAIAdapter
+    prompt: configs/prompts/binary_v1.txt
+    response_mode: enum
+    native_probability: false
+    settings:
+      reasoning_effort: low
+      temperature: provider_default
+      max_completion_tokens: 16
+      tools: none
+    verified:
+      exists: true
+      reported_id: gpt-6-astra
+      logprobs_supported: false
+    notes:
+    - "Errata E15: the API rejects the logprobs parameter outright, so \xA712's A/B probability method\
+      \ is unavailable. Table 3 shows N/A."
+  gpt56_sol:
+    provider: openai
+    model_id: gpt-5.6-sol
+    adapter: src.models.openai_adapter:OpenAIAdapter
+    prompt: configs/prompts/binary_v1.txt
+    response_mode: enum
+    native_probability: false
+    settings:
+      reasoning_effort: low
+      temperature: provider_default
+      max_completion_tokens: 16
+      tools: none
+    verified:
+      exists: true
+      reported_id: gpt-5.6-sol
+      logprobs_supported: false
+  claude_sonnet5:
+    provider: anthropic
+    model_id: claude-sonnet-5
+    adapter: src.models.anthropic_adapter:AnthropicAdapter
+    prompt: configs/prompts/binary_v1.txt
+    response_mode: enum
+    native_probability: false
+    settings:
+      thinking: disabled
+      temperature: not_settable
+      max_tokens: 16
+      tools: none
+    verified:
+      exists: true
+      reported_id: claude-sonnet-5
+      logprobs_supported: false
+  minicheck:
+    provider: local
+    model_id: lytang/MiniCheck-Flan-T5-Large
+    model_revision: 96eafd01cee2d16cf81aaa2fb226b14f422a37b3
+    adapter: src.models.minicheck_adapter:MiniCheckAdapter
+    native_probability: true
+    probability_source: max over document chunks of P(supported)
+    settings:
+      chunk_size_tokens: 500
+      max_input_length: 512
+      label_token_ids:
+      - 3
+      - 209
+      decision_threshold: 0.5
+      aggregation: max
+    notes:
+    - Faithful port of the published inference code; errata E3 requires reproducing the published per-dataset
+      BAcc.
+    - "Chunking is intrinsic to the published system, so MiniCheck is the only model that can never be\
+      \ excluded for context length (\xA714 asymmetry)."
+    - 'Errata E5: not an API call. Hardware and wall-clock are recorded, and its latency is reported separately
+      from the API models.'
+excluded:
+  gemini:
+    reason: 'ADR-011: optional baseline dropped.'
+calibration_eligibility:
+  native_probability:
+  - jev
+  - minicheck
+  not_available:
+  - gpt6_astra
+  - gpt56_sol
+  - claude_sonnet5
+  note: 'Only Jev and MiniCheck expose a native probability. All three frontier LLMs and the production
+    verifier show N/A in Table 3. This is a material change to RQ2''s framing and must be preregistered
+    at G2A, before any results are seen.
+
+    '

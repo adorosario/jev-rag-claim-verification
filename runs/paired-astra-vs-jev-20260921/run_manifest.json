@@ -1,0 +1,32 @@
+{
+  "benchmark_version": "1.0",
+  "credentials_account_note": null,
+  "dataset": {
+    "count": 495,
+    "name": "lytang/LLM-AggreFact",
+    "parquet_sha256": "ca9a5bda9561bbc6f7327ef81ab41727fa10e96f96e9dc74ef32ba3af3c1d8a8",
+    "rows_sha256": "9823b8d4992aa81926593f826cf365e3e8b74bc52a3d61adc5beaf978b462f5f",
+    "selection": "the exact example_ids Jev answered in runs/explore-jev-dev",
+    "split": "dev"
+  },
+  "finished_at_utc": "2026-09-21T14:38:50.832551+00:00",
+  "git_commit": "c28a5bd65aeb858e7f60c3f8bf8b5faf29dbbed5",
+  "models": {
+    "gpt6_astra": {
+      "max_completion_tokens": 16,
+      "mode": "enum",
+      "native_probability": false,
+      "reasoning_effort": "low",
+      "requested": "gpt-6-astra"
+    }
+  },
+  "note": "Paired exploratory comparison against the Jev dev sample; dev split only.",
+  "pricing_snapshot_sha256": null,
+  "prompt_sha256": "sha256:f647a87addd35eb66aac23b0170618489b611a8357a12af8363825218527d24b",
+  "python_version": "3.12.14",
+  "random_seed": 20260918,
+  "run_id": "paired-astra-vs-jev-20260921",
+  "runner_instance": "ce4db58150f6",
+  "runner_region": "local",
+  "started_at_utc": "2026-09-21T14:37:34.188158+00:00"
+}

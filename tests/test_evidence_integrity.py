@@ -11,6 +11,11 @@ from hashlib import sha256
 from pathlib import Path
 
 import pytest
+
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parent))
+from _export import PUBLIC_EXPORT, repo_only  # noqa: E402
 import yaml
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -44,12 +49,19 @@ def test_legal_snapshot_hashes_match(manifest):
             continue
         expected, rel = line.split(None, 1)
         path = REPO_ROOT / rel.strip()
+        if PUBLIC_EXPORT and not path.is_file():
+            # The package ships this manifest and not the vendor's agreement it hashes,
+            # which the conflict-of-interest statement says in as many words: a reader
+            # verifies their own copy of the document against the hash. In this
+            # repository the file is present and a missing one is still a failure.
+            pytest.skip(f"{rel} is not republished; verify your own copy against the hash")
         assert path.is_file(), f"missing snapshot {rel}"
         assert _sha256_bytes(path) == expected, (
             f"{rel} no longer matches its recorded hash; if git normalized line "
             f"endings, check .gitattributes")
 
 
+@repo_only
 def test_mca_snapshot_exists_and_is_searchable():
     """G0 evidence: a live MCA snapshot must be on disk and greppable."""
     snaps = sorted(REPO_ROOT.glob("legal/typesafe-mca-snapshot-*.txt"))
@@ -59,6 +71,7 @@ def test_mca_snapshot_exists_and_is_searchable():
     assert "License Restrictions" in text
 
 
+@repo_only
 def test_mca_benchmark_clause_finding_is_reproducible():
     """The recorded finding must be re-derivable from the snapshot itself.
 
@@ -78,8 +91,14 @@ def test_mca_benchmark_clause_finding_is_reproducible():
 
 def _tracked(pattern: str) -> list[Path]:
     out = subprocess.run(["git", "-C", str(REPO_ROOT), "ls-files", pattern],
-                         capture_output=True, text=True, check=True).stdout.split()
-    return [REPO_ROOT / p for p in out]
+                         capture_output=True, text=True)
+    if out.returncode != 0:
+        # The released package is a directory until it is committed, and `git ls-files`
+        # outside a work tree is an error rather than an empty list. What this test
+        # checks is a property of a git repository, so where there is none there is
+        # nothing to check; in this repository there always is one.
+        pytest.skip("not a git work tree, so git cannot have rewritten anything")
+    return [REPO_ROOT / p for p in out.stdout.split()]
 
 
 @pytest.mark.parametrize("rel", [

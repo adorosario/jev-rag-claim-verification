@@ -68,14 +68,14 @@
     },
     {
       "bacc": 0.758224774018538,
-      "cost_per_1k": 1.6341802383838384,
-      "escalated": 0.17373737373737375,
+      "cost_per_1k": 1.6209681171717172,
+      "escalated": 0.1717171717171717,
       "threshold": 0.8
     },
     {
       "bacc": 0.7400695194004524,
-      "cost_per_1k": 2.9500388242424243,
-      "escalated": 0.3111111111111111,
+      "cost_per_1k": 2.943230743434343,
+      "escalated": 0.3090909090909091,
       "threshold": 0.9
     },
     {
@@ -86,18 +86,18 @@
     },
     {
       "bacc": 0.7481739853996552,
-      "cost_per_1k": 5.214907511111109,
+      "cost_per_1k": 5.214907511111112,
       "escalated": 0.5131313131313131,
       "threshold": 0.97
     },
     {
       "bacc": 0.7530017112800127,
-      "cost_per_1k": 6.427250945454545,
+      "cost_per_1k": 6.427250945454546,
       "escalated": 0.6484848484848484,
       "threshold": 0.99
     }
   ],
-  "concurrency_note": "Both runs used concurrency 12; per-request latency therefore includes client-side queueing and is NOT a controlled measurement.",
+  "concurrency_note": "Both bulk runs used concurrency 12, so per-request latency includes client-side queueing. These are descriptive, NOT the controlled us-west-2 measurement of spec section 21, and no latency ratio is reported (CLAUDE.md rule 10).",
   "delta": {
     "ci": [
       -0.056012023288525656,
@@ -126,19 +126,19 @@
       "verified_precision": 0.8603773584905661
     },
     {
-      "bacc": 0.7721228169555286,
-      "bacc_pooled": 0.8486835568802782,
-      "coverage": 0.8262626262626263,
-      "n": 409,
+      "bacc": 0.7722212034175514,
+      "bacc_pooled": 0.8492494568437685,
+      "coverage": 0.8282828282828283,
+      "n": 410,
       "n_datasets_scored": 11,
       "threshold": 0.8,
       "verified_precision": 0.8744939271255061
     },
     {
-      "bacc": 0.7618608269138716,
-      "bacc_pooled": 0.8630536130536131,
-      "coverage": 0.6888888888888889,
-      "n": 341,
+      "bacc": 0.7584173007430728,
+      "bacc_pooled": 0.8608075341743684,
+      "coverage": 0.6909090909090909,
+      "n": 342,
       "n_datasets_scored": 11,
       "threshold": 0.9,
       "verified_precision": 0.8805970149253731
@@ -219,7 +219,7 @@
     "jev_only_correct": 41,
     "mcnemar_p": 0.48868297090314317,
     "mcnemar_statistic": 34.0,
-    "mcnemar_tests": "RAW per-item accuracy pooled over datasets, NOT the macro-averaged balanced accuracy reported in delta.",
+    "mcnemar_tests": "RAW per-item accuracy pooled over datasets, NOT the macro-averaged balanced accuracy reported in macro_bacc_delta_pp",
     "raw_accuracy_favors": "jev"
   },
   "ratios": {

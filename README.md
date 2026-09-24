@@ -22,7 +22,7 @@ indistinguishable accuracy at **187× lower cost** — and a clearly higher
 false-verification rate, which matters for a verifier.
 
 Full write-up, including the confidence-gating and cascade results and the
-limitations: [`medium/article.md`](medium/article.md).
+limitations: [`medium/article-v3.md`](medium/article-v3.md), the version as published.
 
 ## Reproduce
 
@@ -65,7 +65,7 @@ data/manifests/aggrefact_revision.json       pinned dataset revision + row hashe
 src/                                          loader, adapters, metrics
 scripts/verify/paired_analysis.py            produces medium/generated/numbers.json
 scripts/verify/check_article_numbers.py      article <-> data consistency check
-medium/article.md                            the write-up
+medium/article-v3.md                         the write-up, as published
 medium/generated/numbers.json                every published number
 ```
 

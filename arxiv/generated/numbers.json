@@ -1,0 +1,1928 @@
+{
+  "cascade": {
+    "crossfit": {
+      "cost_per_1k_usd_mean": 2.9153668040404046,
+      "cost_ratio_astra_over_crossfit": 3.064638536105671,
+      "cost_ratio_crossfit_over_jev": 60.9182864542004,
+      "escalated_mean": 0.2991414141414141,
+      "false_verification_rate_ci": [
+        0.1717171717171717,
+        0.21212121212121213
+      ],
+      "false_verification_rate_mean": 0.19224747474747475,
+      "guard_note": "the cross-fitted cascade is a MORE permissive guard than Astra alone: it inherits Jev's verdict on the claims it does not escalate, and Jev false-verifies at a higher rate. The cascade's contribution is cost at matched accuracy, and this is what that costs on the guard metric.",
+      "k_folds": 5,
+      "macro_bacc_ci": [
+        0.7213829160580038,
+        0.758224774018538
+      ],
+      "macro_bacc_mean": 0.7409945635664295,
+      "minus_astra_fvr_pp_mean": 5.083333333333334,
+      "minus_astra_interval_note": "spread over cross-fitting repeats only: it carries the threshold-selection noise, not the sampling uncertainty of the 495 examples, so it is not a confidence interval on the population difference. The confidence interval and the test for this comparison are in vs_astra_inference.",
+      "minus_astra_pp_ci": [
+        -1.6919615750102273,
+        1.992224221043204
+      ],
+      "minus_astra_pp_mean": 0.2692031758323543,
+      "minus_jev_fvr_pp_mean": -4.007575757575757,
+      "minus_jev_pp_mean": 0.8255009442078576,
+      "monte_carlo_sem": {
+        "cost_per_1k_usd": 0.04799630484704694,
+        "escalated_pp": 0.4673507449822662,
+        "fvr_pp": 0.06803125536432283,
+        "macro_bacc_pp": 0.06220661183079986,
+        "note": "standard error of the mean ACROSS cross-fitting repeats, at this seed. It bounds how much each printed cross-fitted mean would move under a different draw of the fold assignment. It is not sampling uncertainty over the claims; that is in vs_astra_inference and vs_jev_inference."
+      },
+      "n_repeats": 200,
+      "n_repeats_reproducing_in_sample": 13,
+      "n_threshold_fits": 1000,
+      "seed": 20260918,
+      "selection_optimism_pp": 1.7230210452108596,
+      "threshold_selection_counts": {
+        "0.5": 1,
+        "0.7": 47,
+        "0.8": 669,
+        "0.9": 0,
+        "0.95": 4,
+        "0.97": 26,
+        "0.99": 253
+      },
+      "thresholds": [
+        0.5,
+        0.7,
+        0.8,
+        0.9,
+        0.95,
+        0.97,
+        0.99
+      ],
+      "verified_precision_mean": 0.8612887198193441,
+      "vs_astra_high_inference": {
+        "direction_note": "n_repeats_mcnemar_favours_* counts the sign of the discordant split per repeat (ties are in neither count); n_repeats_macro_below_arm counts repeats whose MACRO balanced accuracy is below the arm. The two answer different questions and a sentence about 'direction' has to say which one it means.",
+        "frac_bootstrap_draws_negative": 0.4916,
+        "frac_repeats_p_below_05": 0.01,
+        "fvr_inference": {
+          "fvr_delta_boot_mean_pp": 6.10429292929293,
+          "fvr_delta_ci_pp": [
+            2.525252525252525,
+            10.1010101010101
+          ],
+          "fvr_delta_pp": 6.0934343434343425,
+          "mcnemar_p_max": 0.03125,
+          "mcnemar_p_median": 0.00048828125,
+          "mcnemar_p_min": 1.52587890625e-05,
+          "n_discordant_median": 12.0,
+          "n_gold_unsupported": 198,
+          "n_repeats_favouring_cascade": 0,
+          "n_repeats_p_below_05": 200,
+          "n_repeats_p_below_05_favouring_cascade": 0,
+          "note": "paired stratified bootstrap over the gold-unsupported claims and an exact McNemar on the discordant false-verification pairs, one test per cross-fitting repeat. Negative fvr_delta_pp means the cascade false-verifies LESS than the comparison arm. Same estimand as complementarity.fvr_gap_inference, which is the pooled rate."
+        },
+        "interval_note": "paired stratified bootstrap over the 495 claims, cycling through the assembled out-of-fold cascade predictions so the interval carries both sampling and fold-assignment noise. THIS is a confidence interval on the difference; cascade.crossfit.minus_astra_pp_ci is not.",
+        "macro_bacc_delta_boot_mean_pp": 0.00040418194519981527,
+        "macro_bacc_delta_ci_pp": [
+          -4.151963925118802,
+          3.902152336555816
+        ],
+        "macro_bacc_delta_pp": -0.009392497500161356,
+        "mcnemar_p_max": 1.0,
+        "mcnemar_p_median": 0.23269319190831084,
+        "mcnemar_p_min": 0.020061607006937265,
+        "mcnemar_statistic_median": 15.0,
+        "n_discordant_median": 38.0,
+        "n_repeats": 200,
+        "n_repeats_macro_below_arm": 105,
+        "n_repeats_mcnemar_favours_arm": 0,
+        "n_repeats_mcnemar_favours_cascade": 198,
+        "n_repeats_p_below_05": 2,
+        "n_repeats_p_below_05_favouring_cascade": 2,
+        "n_resamples": 10000,
+        "test_note": "exact McNemar on RAW per-item accuracy pooled over datasets, one test per cross-fitting repeat, NOT on the macro-averaged balanced accuracy"
+      },
+      "vs_astra_high_pre_parity_inference": {
+        "direction_note": "n_repeats_mcnemar_favours_* counts the sign of the discordant split per repeat (ties are in neither count); n_repeats_macro_below_arm counts repeats whose MACRO balanced accuracy is below the arm. The two answer different questions and a sentence about 'direction' has to say which one it means.",
+        "frac_bootstrap_draws_negative": 0.4588,
+        "frac_repeats_p_below_05": 0.005,
+        "fvr_inference": {
+          "fvr_delta_boot_mean_pp": 6.60439393939394,
+          "fvr_delta_ci_pp": [
+            3.0303030303030303,
+            10.606060606060606
+          ],
+          "fvr_delta_pp": 6.598484848484848,
+          "mcnemar_p_max": 0.015625,
+          "mcnemar_p_median": 0.000244140625,
+          "mcnemar_p_min": 7.62939453125e-06,
+          "n_discordant_median": 13.0,
+          "n_gold_unsupported": 198,
+          "n_repeats_favouring_cascade": 0,
+          "n_repeats_p_below_05": 200,
+          "n_repeats_p_below_05_favouring_cascade": 0,
+          "note": "paired stratified bootstrap over the gold-unsupported claims and an exact McNemar on the discordant false-verification pairs, one test per cross-fitting repeat. Negative fvr_delta_pp means the cascade false-verifies LESS than the comparison arm. Same estimand as complementarity.fvr_gap_inference, which is the pooled rate."
+        },
+        "interval_note": "paired stratified bootstrap over the 495 claims, cycling through the assembled out-of-fold cascade predictions so the interval carries both sampling and fold-assignment noise. THIS is a confidence interval on the difference; cascade.crossfit.minus_astra_pp_ci is not.",
+        "macro_bacc_delta_boot_mean_pp": 0.1832608388032159,
+        "macro_bacc_delta_ci_pp": [
+          -3.9929547952078988,
+          4.130113604804364
+        ],
+        "macro_bacc_delta_pp": 0.16616287644476313,
+        "mcnemar_p_max": 1.0,
+        "mcnemar_p_median": 0.3240086000878364,
+        "mcnemar_p_min": 0.040959591511636986,
+        "mcnemar_statistic_median": 16.0,
+        "n_discordant_median": 40.0,
+        "n_repeats": 200,
+        "n_repeats_macro_below_arm": 81,
+        "n_repeats_mcnemar_favours_arm": 2,
+        "n_repeats_mcnemar_favours_cascade": 195,
+        "n_repeats_p_below_05": 1,
+        "n_repeats_p_below_05_favouring_cascade": 1,
+        "n_resamples": 10000,
+        "test_note": "exact McNemar on RAW per-item accuracy pooled over datasets, one test per cross-fitting repeat, NOT on the macro-averaged balanced accuracy"
+      },
+      "vs_astra_inference": {
+        "direction_note": "n_repeats_mcnemar_favours_* counts the sign of the discordant split per repeat (ties are in neither count); n_repeats_macro_below_arm counts repeats whose MACRO balanced accuracy is below the arm. The two answer different questions and a sentence about 'direction' has to say which one it means.",
+        "frac_bootstrap_draws_negative": 0.4308,
+        "frac_repeats_p_below_05": 0.08,
+        "fvr_inference": {
+          "fvr_delta_boot_mean_pp": 5.082222222222222,
+          "fvr_delta_ci_pp": [
+            1.5151515151515151,
+            9.090909090909092
+          ],
+          "fvr_delta_pp": 5.083333333333334,
+          "mcnemar_p_max": 0.21875,
+          "mcnemar_p_median": 0.00634765625,
+          "mcnemar_p_min": 0.000274658203125,
+          "n_discordant_median": 12.0,
+          "n_gold_unsupported": 198,
+          "n_repeats_favouring_cascade": 0,
+          "n_repeats_p_below_05": 193,
+          "n_repeats_p_below_05_favouring_cascade": 0,
+          "note": "paired stratified bootstrap over the gold-unsupported claims and an exact McNemar on the discordant false-verification pairs, one test per cross-fitting repeat. Negative fvr_delta_pp means the cascade false-verifies LESS than the comparison arm. Same estimand as complementarity.fvr_gap_inference, which is the pooled rate."
+        },
+        "interval_note": "paired stratified bootstrap over the 495 claims, cycling through the assembled out-of-fold cascade predictions so the interval carries both sampling and fold-assignment noise. THIS is a confidence interval on the difference; cascade.crossfit.minus_astra_pp_ci is not.",
+        "macro_bacc_delta_boot_mean_pp": 0.28423346312711023,
+        "macro_bacc_delta_ci_pp": [
+          -3.851101941867971,
+          4.152442124463521
+        ],
+        "macro_bacc_delta_pp": 0.2692031758323543,
+        "mcnemar_p_max": 1.0,
+        "mcnemar_p_median": 0.20048842206597334,
+        "mcnemar_p_min": 0.012540951371192932,
+        "mcnemar_statistic_median": 13.0,
+        "n_discordant_median": 34.0,
+        "n_repeats": 200,
+        "n_repeats_macro_below_arm": 68,
+        "n_repeats_mcnemar_favours_arm": 0,
+        "n_repeats_mcnemar_favours_cascade": 198,
+        "n_repeats_p_below_05": 16,
+        "n_repeats_p_below_05_favouring_cascade": 16,
+        "n_resamples": 10000,
+        "test_note": "exact McNemar on RAW per-item accuracy pooled over datasets, one test per cross-fitting repeat, NOT on the macro-averaged balanced accuracy"
+      },
+      "vs_jev_inference": {
+        "direction_note": "n_repeats_mcnemar_favours_* counts the sign of the discordant split per repeat (ties are in neither count); n_repeats_macro_below_arm counts repeats whose MACRO balanced accuracy is below the arm. The two answer different questions and a sentence about 'direction' has to say which one it means.",
+        "frac_bootstrap_draws_negative": 0.3456,
+        "frac_repeats_p_below_05": 0.0,
+        "fvr_inference": {
+          "fvr_delta_boot_mean_pp": -4.01,
+          "fvr_delta_ci_pp": [
+            -8.080808080808081,
+            -0.5050505050505051
+          ],
+          "fvr_delta_pp": -4.007575757575758,
+          "mcnemar_p_max": 0.5078125,
+          "mcnemar_p_median": 0.057373046875,
+          "mcnemar_p_min": 0.0025768280029296875,
+          "n_discordant_median": 14.0,
+          "n_gold_unsupported": 198,
+          "n_repeats_favouring_cascade": 200,
+          "n_repeats_p_below_05": 76,
+          "n_repeats_p_below_05_favouring_cascade": 76,
+          "note": "paired stratified bootstrap over the gold-unsupported claims and an exact McNemar on the discordant false-verification pairs, one test per cross-fitting repeat. Negative fvr_delta_pp means the cascade false-verifies LESS than the comparison arm. Same estimand as complementarity.fvr_gap_inference, which is the pooled rate."
+        },
+        "interval_note": "paired stratified bootstrap over the 495 claims, cycling through the assembled out-of-fold cascade predictions so the interval carries both sampling and fold-assignment noise. THIS is a confidence interval on the difference; cascade.crossfit.minus_astra_pp_ci is not.",
+        "macro_bacc_delta_boot_mean_pp": 0.8251762412102489,
+        "macro_bacc_delta_ci_pp": [
+          -3.356094441916499,
+          4.856373238789236
+        ],
+        "macro_bacc_delta_pp": 0.8255009442078677,
+        "mcnemar_p_max": 1.0,
+        "mcnemar_p_median": 0.8639947331685107,
+        "mcnemar_p_min": 0.28104151505976915,
+        "mcnemar_statistic_median": 19.0,
+        "n_discordant_median": 41.0,
+        "n_repeats": 200,
+        "n_repeats_macro_below_arm": 29,
+        "n_repeats_mcnemar_favours_arm": 57,
+        "n_repeats_mcnemar_favours_cascade": 121,
+        "n_repeats_p_below_05": 0,
+        "n_repeats_p_below_05_favouring_cascade": 0,
+        "n_resamples": 10000,
+        "test_note": "exact McNemar on RAW per-item accuracy pooled over datasets, one test per cross-fitting repeat, NOT on the macro-averaged balanced accuracy"
+      }
+    },
+    "in_sample_best": {
+      "astra_n_false_verified": 28,
+      "cost_per_1k_usd": 1.6209681171717172,
+      "escalated": 0.1717171717171717,
+      "false_verification_rate": 0.20202020202020202,
+      "fv_vs_astra_astra_only": 1,
+      "fv_vs_astra_cascade_only": 13,
+      "fv_vs_astra_mcnemar_p": 0.0018310546875,
+      "macro_bacc": 0.758224774018538,
+      "macro_bacc_minus_astra_pp": 1.992224221043204,
+      "n_false_verified": 40,
+      "n_gold_unsupported": 198,
+      "threshold": 0.8,
+      "verified_precision": 0.8591549295774648
+    },
+    "in_sample_sweep": [
+      {
+        "astra_n_false_verified": 28,
+        "cost_per_1k_usd": 0.04785700606060606,
+        "escalated": 0.0,
+        "false_verification_rate": 0.23232323232323232,
+        "fv_vs_astra_astra_only": 4,
+        "fv_vs_astra_cascade_only": 22,
+        "fv_vs_astra_mcnemar_p": 0.0005335211753845215,
+        "macro_bacc": 0.7327395541243509,
+        "macro_bacc_minus_astra_pp": -0.5562977683755133,
+        "n_false_verified": 46,
+        "n_gold_unsupported": 198,
+        "threshold": 0.5,
+        "verified_precision": 0.8408304498269896
+      },
+      {
+        "astra_n_false_verified": 28,
+        "cost_per_1k_usd": 0.999978218181818,
+        "escalated": 0.10909090909090909,
+        "false_verification_rate": 0.21212121212121213,
+        "fv_vs_astra_astra_only": 3,
+        "fv_vs_astra_cascade_only": 17,
+        "fv_vs_astra_mcnemar_p": 0.0025768280029296875,
+        "macro_bacc": 0.7480947922272843,
+        "macro_bacc_minus_astra_pp": 0.9792260419178245,
+        "n_false_verified": 42,
+        "n_gold_unsupported": 198,
+        "threshold": 0.7,
+        "verified_precision": 0.8531468531468531
+      },
+      {
+        "astra_n_false_verified": 28,
+        "cost_per_1k_usd": 1.6209681171717172,
+        "escalated": 0.1717171717171717,
+        "false_verification_rate": 0.20202020202020202,
+        "fv_vs_astra_astra_only": 1,
+        "fv_vs_astra_cascade_only": 13,
+        "fv_vs_astra_mcnemar_p": 0.0018310546875,
+        "macro_bacc": 0.758224774018538,
+        "macro_bacc_minus_astra_pp": 1.992224221043204,
+        "n_false_verified": 40,
+        "n_gold_unsupported": 198,
+        "threshold": 0.8,
+        "verified_precision": 0.8591549295774648
+      },
+      {
+        "astra_n_false_verified": 28,
+        "cost_per_1k_usd": 2.943230743434343,
+        "escalated": 0.3090909090909091,
+        "false_verification_rate": 0.1919191919191919,
+        "fv_vs_astra_astra_only": 1,
+        "fv_vs_astra_cascade_only": 11,
+        "fv_vs_astra_mcnemar_p": 0.00634765625,
+        "macro_bacc": 0.7400695194004524,
+        "macro_bacc_minus_astra_pp": 0.17669875923463918,
+        "n_false_verified": 38,
+        "n_gold_unsupported": 198,
+        "threshold": 0.9,
+        "verified_precision": 0.8597785977859779
+      },
+      {
+        "astra_n_false_verified": 28,
+        "cost_per_1k_usd": 4.564665086868687,
+        "escalated": 0.44242424242424244,
+        "false_verification_rate": 0.16666666666666666,
+        "fv_vs_astra_astra_only": 1,
+        "fv_vs_astra_cascade_only": 6,
+        "fv_vs_astra_mcnemar_p": 0.125,
+        "macro_bacc": 0.7449209031992045,
+        "macro_bacc_minus_astra_pp": 0.6618371391098443,
+        "n_false_verified": 33,
+        "n_gold_unsupported": 198,
+        "threshold": 0.95,
+        "verified_precision": 0.8730769230769231
+      },
+      {
+        "astra_n_false_verified": 28,
+        "cost_per_1k_usd": 5.214907511111112,
+        "escalated": 0.5131313131313131,
+        "false_verification_rate": 0.15151515151515152,
+        "fv_vs_astra_astra_only": 1,
+        "fv_vs_astra_cascade_only": 3,
+        "fv_vs_astra_mcnemar_p": 0.625,
+        "macro_bacc": 0.7481739853996552,
+        "macro_bacc_minus_astra_pp": 0.9871453591549173,
+        "n_false_verified": 30,
+        "n_gold_unsupported": 198,
+        "threshold": 0.97,
+        "verified_precision": 0.8823529411764706
+      },
+      {
+        "astra_n_false_verified": 28,
+        "cost_per_1k_usd": 6.427250945454546,
+        "escalated": 0.6484848484848484,
+        "false_verification_rate": 0.13636363636363635,
+        "fv_vs_astra_astra_only": 1,
+        "fv_vs_astra_cascade_only": 0,
+        "fv_vs_astra_mcnemar_p": 1.0,
+        "macro_bacc": 0.7530017112800127,
+        "macro_bacc_minus_astra_pp": 1.4699179471906687,
+        "n_false_verified": 27,
+        "n_gold_unsupported": 198,
+        "threshold": 0.99,
+        "verified_precision": 0.8924302788844621
+      }
+    ],
+    "oracle": {
+      "cost_per_1k_usd": 1.5994933696969698,
+      "escalated": 0.20202020202020202,
+      "false_verification_rate": 0.12121212121212122,
+      "headroom_over_jev_pp": 9.638298346432316,
+      "macro_bacc": 0.829122537588674,
+      "note": "escalate exactly the claims Jev gets wrong: an upper bound no router can pass, not an achievable operating point",
+      "verified_precision": 0.9139784946236559
+    },
+    "random_control": [
+      {
+        "clears_random_ci": false,
+        "confidence_macro_bacc": 0.7480947922272843,
+        "confidence_minus_random_pp": 1.471822875841311,
+        "escalated": 0.10909090909090909,
+        "random_cost_per_1k_usd_mean": 1.02253741010101,
+        "random_macro_bacc_ci": [
+          0.7194996953046123,
+          0.7493870692400789
+        ],
+        "random_macro_bacc_mean": 0.7333765634688711,
+        "threshold": 0.7
+      },
+      {
+        "clears_random_ci": true,
+        "confidence_macro_bacc": 0.758224774018538,
+        "confidence_minus_random_pp": 2.5127296502067242,
+        "escalated": 0.1717171717171717,
+        "random_cost_per_1k_usd_mean": 1.585054581818182,
+        "random_macro_bacc_ci": [
+          0.7138955369487386,
+          0.752985358367121
+        ],
+        "random_macro_bacc_mean": 0.7330974775164708,
+        "threshold": 0.8
+      },
+      {
+        "clears_random_ci": false,
+        "confidence_macro_bacc": 0.7400695194004524,
+        "confidence_minus_random_pp": 0.6513463858754287,
+        "escalated": 0.3090909090909091,
+        "random_cost_per_1k_usd_mean": 2.8110197333333335,
+        "random_macro_bacc_ci": [
+          0.7113158323774159,
+          0.7600504242191359
+        ],
+        "random_macro_bacc_mean": 0.7335560555416981,
+        "threshold": 0.9
+      },
+      {
+        "clears_random_ci": false,
+        "confidence_macro_bacc": 0.7449209031992045,
+        "confidence_minus_random_pp": 1.063789489271627,
+        "escalated": 0.44242424242424244,
+        "random_cost_per_1k_usd_mean": 4.013188218181819,
+        "random_macro_bacc_ci": [
+          0.7075636787095049,
+          0.7603435063677011
+        ],
+        "random_macro_bacc_mean": 0.7342830083064882,
+        "threshold": 0.95
+      },
+      {
+        "clears_random_ci": false,
+        "confidence_macro_bacc": 0.7481739853996552,
+        "confidence_minus_random_pp": 1.3047628126770183,
+        "escalated": 0.5131313131313131,
+        "random_cost_per_1k_usd_mean": 4.636308622222222,
+        "random_macro_bacc_ci": [
+          0.7140420885021119,
+          0.760279108631864
+        ],
+        "random_macro_bacc_mean": 0.735126357272885,
+        "threshold": 0.97
+      },
+      {
+        "clears_random_ci": false,
+        "confidence_macro_bacc": 0.7530017112800127,
+        "confidence_minus_random_pp": 1.7144981997381792,
+        "escalated": 0.6484848484848484,
+        "random_cost_per_1k_usd_mean": 5.838954682828284,
+        "random_macro_bacc_ci": [
+          0.7126833995459874,
+          0.7581561594749202
+        ],
+        "random_macro_bacc_mean": 0.7358567292826309,
+        "threshold": 0.99
+      }
+    ]
+  },
+  "complementarity": {
+    "agreement": 0.8484848484848485,
+    "astra_only_correct": 34,
+    "both_correct": 354,
+    "datasets_astra_higher": 5,
+    "datasets_jev_higher": 6,
+    "disagreement": 0.15151515151515152,
+    "error_correlation": {
+      "a_only_correct": 41,
+      "b_only_correct": 34,
+      "both_correct": 354,
+      "cohens_kappa": 0.5420341701104053,
+      "joint_failure_excess_ratio": 3.053271028037384,
+      "n": 495,
+      "neither_correct": 66,
+      "neither_correct_expected_if_independent": 21.61616161616161,
+      "note": "per-item correctness agreement between the two arms. Positive kappa means the errors are correlated, which they are; the cascade rests on the discordant cells being large, not on the errors being independent.",
+      "phi": 0.5425299991584136
+    },
+    "fvr_gap_inference": {
+      "a_only_false_verifies": 22,
+      "b_only_false_verifies": 4,
+      "both_false_verify": 24,
+      "gap_boot_mean_pp": 9.097121212121213,
+      "gap_ci_pp": [
+        4.545454545454546,
+        13.636363636363635
+      ],
+      "gap_pp": 9.090909090909092,
+      "mcnemar_p": 0.0005335211753845215,
+      "mcnemar_statistic": 4.0,
+      "n_gold_unsupported": 198,
+      "neither_false_verifies": 148,
+      "note": "paired stratified bootstrap over the gold-unsupported claims and an exact McNemar on the discordant false-verification pairs; the estimand is the pooled rate, which is what the configurations report"
+    },
+    "fvr_gap_pp": 9.090909090909092,
+    "jev_only_correct": 41,
+    "neither_correct": 66,
+    "per_dataset_concentration": {
+      "macro_delta_pp": -0.5562977683755037,
+      "max_abs_remaining_pp": 9.615384615384615,
+      "mean_abs_remaining_pp": 4.562128491174862,
+      "n_datasets": 11,
+      "n_remaining": 9,
+      "note": "signed per-dataset balanced-accuracy differences in percentage points, jev minus astra. The macro difference is their mean. 'widest two' are the two largest in absolute value, which is a description of this sample and not a selected subgroup result.",
+      "per_dataset_delta_pp": {
+        "AggreFact-CNN": -20.11278195488721,
+        "AggreFact-XSum": 4.629629629629628,
+        "ClaimVerify": -0.8445945945945832,
+        "ExpertQA": 14.358108108108103,
+        "FactCheck-GPT": -2.631578947368418,
+        "Lfqa": 2.3809523809523836,
+        "RAGTruth": 4.8780487804877986,
+        "Reveal": -7.620320855614981,
+        "TofuEval-MediaS": -9.615384615384615,
+        "TofuEval-MeetB": 1.3157894736842146,
+        "Wice": 7.14285714285714
+      },
+      "remaining_cancellation_pct": 99.11200902031017,
+      "remaining_sum_abs_pp": 41.059156420573764,
+      "remaining_sum_pp": -0.36460160535143293,
+      "sum_abs_deltas_pp": 75.53004648356908,
+      "sum_of_deltas_pp": -6.119275452130541,
+      "widest_two": [
+        {
+          "dataset": "AggreFact-CNN",
+          "delta_pp": -20.11278195488721
+        },
+        {
+          "dataset": "ExpertQA",
+          "delta_pp": 14.358108108108103
+        }
+      ],
+      "widest_two_cancellation_pct": 83.30569986367489,
+      "widest_two_share_of_sum_pct": 94.04175203087989,
+      "widest_two_sum_abs_pp": 34.470890062995316,
+      "widest_two_sum_pp": -5.754673846779108
+    }
+  },
+  "configurations": {
+    "astra": {
+      "calibration": {
+        "note": "the provider exposes no token logprobs for this model, so this configuration cannot supply a routing signal at all",
+        "probability_provenance": "none"
+      },
+      "cost_per_1k_usd": 8.934545454545454,
+      "false_verification_rate": 0.1414141414141414,
+      "latency_ms": {
+        "mean": 2068.647024450519,
+        "p50": 1478.0278729999736,
+        "p90": 3039.4498660000863,
+        "p95": 4135.023069300038,
+        "p99": 11735.492775999917
+      },
+      "macro_bacc": 0.738302531808106,
+      "macro_bacc_ci": [
+        0.6879545930210572,
+        0.7877096227405359
+      ],
+      "macro_f1": 0.7817864956060662,
+      "max_input_tokens": 12359,
+      "max_output_tokens": 134,
+      "mcc": 0.5806304545327449,
+      "mean_input_tokens": 843.4242424242424,
+      "mean_output_tokens": 10.006060606060606,
+      "min_output_tokens": 4,
+      "n_distinct_output_tokens": 47,
+      "n_false_verified": 28,
+      "p95_input_tokens": 1838.5999999999995,
+      "per_dataset": {
+        "AggreFact-CNN": 0.68796992481203,
+        "AggreFact-XSum": 0.6296296296296297,
+        "ClaimVerify": 0.8564189189189189,
+        "ExpertQA": 0.4611486486486487,
+        "FactCheck-GPT": 0.674812030075188,
+        "Lfqa": 0.8184523809523809,
+        "RAGTruth": 0.8780487804878049,
+        "Reveal": 0.8048128342245989,
+        "TofuEval-MediaS": 0.7115384615384616,
+        "TofuEval-MeetB": 0.7913533834586466,
+        "Wice": 0.8071428571428572
+      },
+      "pooled_balanced_accuracy": 0.7962962962962963,
+      "pred_supported_rate": 0.49696969696969695,
+      "raw_accuracy": 0.7838383838383839,
+      "reasoning_effort": "low",
+      "reasoning_tokens": {
+        "max": 123,
+        "mean": 4.4363636363636365,
+        "median": 0.0,
+        "n": 495,
+        "n_zero": 407,
+        "note": "provider-reported internal reasoning tokens per call, from extra.reasoning_tokens in the released predictions. The effort setting is what we asked for; this is what came back."
+      },
+      "verified_precision": 0.8861788617886179
+    },
+    "astra_high": {
+      "calibration": {
+        "note": "the provider exposes no token logprobs for this model, so this configuration cannot supply a routing signal at all",
+        "probability_provenance": "none"
+      },
+      "cost_per_1k_usd": 10.699292929292929,
+      "false_verification_rate": 0.13131313131313133,
+      "latency_ms": {
+        "mean": 2704.68520980404,
+        "p50": 2133.013635000225,
+        "p90": 4530.958780799938,
+        "p95": 5851.094087299906,
+        "p99": 10658.032652379845
+      },
+      "macro_bacc": 0.7410884885414312,
+      "macro_bacc_ci": [
+        0.6905851258464624,
+        0.7900696588192104
+      ],
+      "macro_f1": 0.7821168378659669,
+      "max_completion_tokens": 4096,
+      "max_input_tokens": 12359,
+      "max_output_tokens": 519,
+      "mcc": 0.5840629978608687,
+      "mean_input_tokens": 843.4242424242424,
+      "mean_output_tokens": 45.3010101010101,
+      "min_output_tokens": 4,
+      "n_distinct_output_tokens": 109,
+      "n_false_verified": 26,
+      "p95_input_tokens": 1838.5999999999995,
+      "per_dataset": {
+        "AggreFact-CNN": 0.68796992481203,
+        "AggreFact-XSum": 0.6574074074074074,
+        "ClaimVerify": 0.8564189189189189,
+        "ExpertQA": 0.4611486486486487,
+        "FactCheck-GPT": 0.674812030075188,
+        "Lfqa": 0.8601190476190477,
+        "RAGTruth": 0.8780487804878049,
+        "Reveal": 0.8048128342245989,
+        "TofuEval-MediaS": 0.6858974358974359,
+        "TofuEval-MeetB": 0.7781954887218046,
+        "Wice": 0.8071428571428572
+      },
+      "pooled_balanced_accuracy": 0.797979797979798,
+      "pred_supported_rate": 0.4888888888888889,
+      "raw_accuracy": 0.7838383838383839,
+      "reasoning_effort": "high",
+      "reasoning_tokens": {
+        "max": 509,
+        "mean": 35.723232323232324,
+        "median": 21.0,
+        "n": 495,
+        "n_zero": 77,
+        "note": "provider-reported internal reasoning tokens per call, from extra.reasoning_tokens in the released predictions. The effort setting is what we asked for; this is what came back."
+      },
+      "verified_precision": 0.8925619834710744
+    },
+    "jev": {
+      "calibration": {
+        "auprc": 0.8931086416437267,
+        "auroc": 0.8677175798387919,
+        "brier": 0.15328444444444445,
+        "constant_half_brier": 0.25,
+        "ece": 0.0987878787878788,
+        "ece_bins": 10,
+        "ece_sensitivity": 0.1073939393939394,
+        "ece_sensitivity_bins": 15,
+        "logloss_clip": {
+          "clipped_nats": 345.388563546537,
+          "eps": 1e-15,
+          "n": 10,
+          "n_supported_at_zero": 9,
+          "n_unsupported_at_one": 1,
+          "nats_each": 34.5388563546537,
+          "share": 0.6156378805529534,
+          "total_nats": 561.0255224001421
+        },
+        "logloss_eps_sensitivity": {
+          "crossover_eps": 2.9108661894187363e-06,
+          "eps": 1e-15,
+          "grid": [
+            {
+              "eps": 1e-15,
+              "exceeds_reference": true,
+              "nll": 1.1333848937376607
+            },
+            {
+              "eps": 3.1622776601683794e-15,
+              "exceeds_reference": true,
+              "nll": 1.1101594132299588
+            },
+            {
+              "eps": 1e-14,
+              "exceeds_reference": true,
+              "nll": 1.0868680231721253
+            },
+            {
+              "eps": 3.1622776601683796e-14,
+              "exceeds_reference": true,
+              "nll": 1.0636067859430194
+            },
+            {
+              "eps": 1e-13,
+              "exceeds_reference": true,
+              "nll": 1.0403489091838158
+            },
+            {
+              "eps": 3.162277660168379e-13,
+              "exceeds_reference": true,
+              "nll": 1.0170913335608378
+            },
+            {
+              "eps": 1e-12,
+              "exceeds_reference": true,
+              "nll": 0.9938327113837558
+            },
+            {
+              "eps": 3.1622776601683794e-12,
+              "exceeds_reference": true,
+              "nll": 0.9705742502049155
+            },
+            {
+              "eps": 1e-11,
+              "exceeds_reference": true,
+              "nll": 0.9473157959620819
+            },
+            {
+              "eps": 3.1622776601683794e-11,
+              "exceeds_reference": true,
+              "nll": 0.9240573583673745
+            },
+            {
+              "eps": 1e-10,
+              "exceeds_reference": true,
+              "nll": 0.900798925415088
+            },
+            {
+              "eps": 3.1622776601683795e-10,
+              "exceeds_reference": true,
+              "nll": 0.8775404906975205
+            },
+            {
+              "eps": 1e-09,
+              "exceeds_reference": true,
+              "nll": 0.8542820552592939
+            },
+            {
+              "eps": 3.1622776601683795e-09,
+              "exceeds_reference": true,
+              "nll": 0.8310236203638125
+            },
+            {
+              "eps": 1e-08,
+              "exceeds_reference": true,
+              "nll": 0.8077651864810195
+            },
+            {
+              "eps": 3.162277660168379e-08,
+              "exceeds_reference": true,
+              "nll": 0.7845067556628676
+            },
+            {
+              "eps": 1e-07,
+              "exceeds_reference": true,
+              "nll": 0.7612483344721527
+            },
+            {
+              "eps": 3.162277660168379e-07,
+              "exceeds_reference": true,
+              "nll": 0.7379899437446362
+            },
+            {
+              "eps": 1e-06,
+              "exceeds_reference": true,
+              "nll": 0.7147316493601431
+            },
+            {
+              "eps": 3.162277660168379e-06,
+              "exceeds_reference": false,
+              "nll": 0.6914736596386019
+            },
+            {
+              "eps": 1e-05,
+              "exceeds_reference": false,
+              "nll": 0.6682166333503265
+            },
+            {
+              "eps": 3.1622776601683795e-05,
+              "exceeds_reference": false,
+              "nll": 0.6449626537627248
+            },
+            {
+              "eps": 0.0001,
+              "exceeds_reference": false,
+              "nll": 0.6217183092593936
+            },
+            {
+              "eps": 0.00031622776601683794,
+              "exceeds_reference": false,
+              "nll": 0.598504439275972
+            },
+            {
+              "eps": 0.001,
+              "exceeds_reference": false,
+              "nll": 0.5753869953079845
+            },
+            {
+              "eps": 0.0031622776601683794,
+              "exceeds_reference": false,
+              "nll": 0.552575049651565
+            },
+            {
+              "eps": 0.005,
+              "exceeds_reference": false,
+              "nll": 0.543699821788052
+            },
+            {
+              "eps": 0.01,
+              "exceeds_reference": false,
+              "nll": 0.5307349393344291
+            },
+            {
+              "eps": 0.03162277660168379,
+              "exceeds_reference": false,
+              "nll": 0.5043894095429008
+            },
+            {
+              "eps": 0.1,
+              "exceeds_reference": false,
+              "nll": 0.4699402619022553
+            }
+          ],
+          "reference_nll": 0.6931471805599468,
+          "reference_p": 0.5,
+          "reported_exceeds_reference": true,
+          "reported_nll": 1.1333848937376607
+        },
+        "logloss_epsilon": 1e-15,
+        "negative_log_loss": 1.1333848937376607,
+        "probability_provenance": "native",
+        "probability_resolution": {
+          "decimals": 2,
+          "half_step": 0.005,
+          "max_below_one": 0.99,
+          "min_positive": 0.01,
+          "n": 495,
+          "n_at_one": 26,
+          "n_at_zero": 86,
+          "n_distinct": 87,
+          "step": 0.01
+        },
+        "reliability": [
+          {
+            "bin": 0,
+            "hi": 0.0,
+            "lo": 0.0,
+            "mean_p": 0.0,
+            "n": 50,
+            "observed_supported_rate": 0.18
+          },
+          {
+            "bin": 1,
+            "hi": 0.01,
+            "lo": 0.0,
+            "mean_p": 0.002653061224489796,
+            "n": 49,
+            "observed_supported_rate": 0.02040816326530612
+          },
+          {
+            "bin": 2,
+            "hi": 0.13,
+            "lo": 0.01,
+            "mean_p": 0.05448979591836735,
+            "n": 49,
+            "observed_supported_rate": 0.2857142857142857
+          },
+          {
+            "bin": 3,
+            "hi": 0.45,
+            "lo": 0.13,
+            "mean_p": 0.2904,
+            "n": 50,
+            "observed_supported_rate": 0.5
+          },
+          {
+            "bin": 4,
+            "hi": 0.79,
+            "lo": 0.45,
+            "mean_p": 0.6406000000000001,
+            "n": 50,
+            "observed_supported_rate": 0.64
+          },
+          {
+            "bin": 5,
+            "hi": 0.9,
+            "lo": 0.8,
+            "mean_p": 0.8532653061224489,
+            "n": 49,
+            "observed_supported_rate": 0.8367346938775511
+          },
+          {
+            "bin": 6,
+            "hi": 0.94,
+            "lo": 0.9,
+            "mean_p": 0.9234693877551019,
+            "n": 49,
+            "observed_supported_rate": 0.7959183673469388
+          },
+          {
+            "bin": 7,
+            "hi": 0.98,
+            "lo": 0.95,
+            "mean_p": 0.9631999999999998,
+            "n": 50,
+            "observed_supported_rate": 0.82
+          },
+          {
+            "bin": 8,
+            "hi": 0.99,
+            "lo": 0.98,
+            "mean_p": 0.9840000000000001,
+            "n": 50,
+            "observed_supported_rate": 0.94
+          },
+          {
+            "bin": 9,
+            "hi": 1.0,
+            "lo": 0.99,
+            "mean_p": 0.9953061224489795,
+            "n": 49,
+            "observed_supported_rate": 0.9795918367346939
+          }
+        ],
+        "selective_auprc": 0.8922057688389754,
+        "selective_auroc": 0.7215822784810126,
+        "selective_note": "confidence max(p, 1-p) scored against the model's own correctness: this is the quantity that justifies routing, and it is NOT the same as `auroc`",
+        "shape": {
+          "best_bin": {
+            "bin": 4,
+            "confidence": 0.6406000000000001,
+            "gap": -0.0006000000000000449,
+            "mean_p": 0.6406000000000001,
+            "n": 50,
+            "observed": 0.64
+          },
+          "first_at_or_below_diagonal_p": 0.6406000000000001,
+          "interior_definition_hi": 0.95,
+          "interior_share_of_ece_pct": 60.87934560327197,
+          "n_bins_below_diagonal": 6,
+          "n_tied_at_zero": 86,
+          "n_tied_at_zero_in_lowest_bin": 50,
+          "note": "signed gap is observed minus predicted, so positive means the model is under-confident there. The claim 'miscalibrated at the confident ends' is false as a statement about predicted probability and true as one about max(p, 1-p): the two widest gaps are at predicted 0.05 and 0.29, and the first of those is a confident prediction. This block exists so the prose has to cite where the deviation is rather than assert where it feels.",
+          "over_confident_band": [
+            0.9234693877551019,
+            0.9840000000000001
+          ],
+          "over_confident_band_tolerance": 0.02,
+          "under_confident_at_or_below": 0.2904,
+          "worst_bins": [
+            {
+              "bin": 2,
+              "confidence": 0.9455102040816327,
+              "gap": 0.23122448979591836,
+              "mean_p": 0.05448979591836735,
+              "n": 49,
+              "observed": 0.2857142857142857
+            },
+            {
+              "bin": 3,
+              "confidence": 0.7096,
+              "gap": 0.2096,
+              "mean_p": 0.2904,
+              "n": 50,
+              "observed": 0.5
+            }
+          ]
+        }
+      },
+      "cost_per_1k_usd": 0.04785700606060606,
+      "false_verification_rate": 0.23232323232323232,
+      "latency_ms": {
+        "mean": 244.0737244525331,
+        "p50": 214.11910300003,
+        "p90": 274.0789127999051,
+        "p95": 313.4181550998619,
+        "p99": 1092.3543815200082
+      },
+      "macro_bacc": 0.7327395541243509,
+      "macro_bacc_ci": [
+        0.6852294012529562,
+        0.7786052179701075
+      ],
+      "macro_f1": 0.7909133916804649,
+      "max_input_tokens": 12977,
+      "max_output_tokens": 36,
+      "mcc": 0.5822655386706584,
+      "mean_input_tokens": 1139.4525252525252,
+      "mean_output_tokens": 35.41616161616162,
+      "min_output_tokens": 35,
+      "n_distinct_output_tokens": 2,
+      "n_false_verified": 46,
+      "p95_input_tokens": 2212.2999999999975,
+      "per_dataset": {
+        "AggreFact-CNN": 0.4868421052631579,
+        "AggreFact-XSum": 0.6759259259259259,
+        "ClaimVerify": 0.847972972972973,
+        "ExpertQA": 0.6047297297297297,
+        "FactCheck-GPT": 0.6484962406015038,
+        "Lfqa": 0.8422619047619048,
+        "RAGTruth": 0.9268292682926829,
+        "Reveal": 0.7286096256684491,
+        "TofuEval-MediaS": 0.6153846153846154,
+        "TofuEval-MeetB": 0.8045112781954887,
+        "Wice": 0.8785714285714286
+      },
+      "pooled_balanced_accuracy": 0.7929292929292929,
+      "pred_supported_rate": 0.5838383838383838,
+      "raw_accuracy": 0.797979797979798,
+      "verified_precision": 0.8408304498269896
+    },
+    "minicheck": {
+      "calibration": {
+        "auprc": 0.7404308078613379,
+        "auroc": 0.6745485154576064,
+        "brier": 0.3162156139918064,
+        "constant_half_brier": 0.25,
+        "ece": 0.28011014331790685,
+        "ece_bins": 10,
+        "ece_sensitivity": 0.278109630819109,
+        "ece_sensitivity_bins": 15,
+        "logloss_clip": {
+          "clipped_nats": 0.0,
+          "eps": 1e-15,
+          "n": 0,
+          "n_supported_at_zero": 0,
+          "n_unsupported_at_one": 0,
+          "nats_each": 34.538776394910684,
+          "share": 0.0,
+          "total_nats": 500.2369733753169
+        },
+        "logloss_eps_sensitivity": {
+          "crossover_eps": null,
+          "eps": 1e-15,
+          "grid": [
+            {
+              "eps": 1e-15,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 3.1622776601683794e-15,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 1e-14,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 3.1622776601683796e-14,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 1e-13,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 3.162277660168379e-13,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 1e-12,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 3.1622776601683794e-12,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 5e-12,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 1e-11,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 3.1622776601683794e-11,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 1e-10,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 3.1622776601683795e-10,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 1e-09,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 3.1622776601683795e-09,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 1e-08,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 3.162277660168379e-08,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 1e-07,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 3.162277660168379e-07,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 1e-06,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 3.162277660168379e-06,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 1e-05,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 3.1622776601683795e-05,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 0.0001,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 0.00031622776601683794,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 0.001,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 0.0031622776601683794,
+              "exceeds_reference": true,
+              "nll": 1.0105797441925595
+            },
+            {
+              "eps": 0.01,
+              "exceeds_reference": true,
+              "nll": 1.010626006352488
+            },
+            {
+              "eps": 0.03162277660168379,
+              "exceeds_reference": true,
+              "nll": 0.991479930686026
+            },
+            {
+              "eps": 0.1,
+              "exceeds_reference": true,
+              "nll": 0.8616245572390421
+            }
+          ],
+          "reference_nll": 0.6931471805599468,
+          "reference_p": 0.5,
+          "reported_exceeds_reference": true,
+          "reported_nll": 1.0105797441925595
+        },
+        "logloss_epsilon": 1e-15,
+        "negative_log_loss": 1.0105797441925595,
+        "probability_provenance": "native",
+        "probability_resolution": {
+          "decimals": 11,
+          "half_step": 5e-12,
+          "max_below_one": 0.9856607913970947,
+          "min_positive": 0.005300537217408419,
+          "n": 495,
+          "n_at_one": 0,
+          "n_at_zero": 0,
+          "n_distinct": 453,
+          "step": 1e-11
+        },
+        "reliability": [
+          {
+            "bin": 0,
+            "hi": 0.02486502379179001,
+            "lo": 0.005300537217408419,
+            "mean_p": 0.01607100951485336,
+            "n": 50,
+            "observed_supported_rate": 0.28
+          },
+          {
+            "bin": 1,
+            "hi": 0.041784774512052536,
+            "lo": 0.026691041886806488,
+            "mean_p": 0.03421127864596795,
+            "n": 49,
+            "observed_supported_rate": 0.4489795918367347
+          },
+          {
+            "bin": 2,
+            "hi": 0.07594462484121323,
+            "lo": 0.042344119399785995,
+            "mean_p": 0.05665515598898031,
+            "n": 49,
+            "observed_supported_rate": 0.5510204081632653
+          },
+          {
+            "bin": 3,
+            "hi": 0.16914039850234985,
+            "lo": 0.07876766473054886,
+            "mean_p": 0.111211047321558,
+            "n": 50,
+            "observed_supported_rate": 0.44
+          },
+          {
+            "bin": 4,
+            "hi": 0.28152188658714294,
+            "lo": 0.1710355281829834,
+            "mean_p": 0.22568962454795838,
+            "n": 50,
+            "observed_supported_rate": 0.7
+          },
+          {
+            "bin": 5,
+            "hi": 0.44711562991142273,
+            "lo": 0.2847400903701782,
+            "mean_p": 0.3421368684087481,
+            "n": 49,
+            "observed_supported_rate": 0.673469387755102
+          },
+          {
+            "bin": 6,
+            "hi": 0.6904579401016235,
+            "lo": 0.45069757103919983,
+            "mean_p": 0.5677794747206629,
+            "n": 49,
+            "observed_supported_rate": 0.6326530612244898
+          },
+          {
+            "bin": 7,
+            "hi": 0.9012287855148315,
+            "lo": 0.6970770359039307,
+            "mean_p": 0.7899931359291077,
+            "n": 50,
+            "observed_supported_rate": 0.72
+          },
+          {
+            "bin": 8,
+            "hi": 0.9633409380912781,
+            "lo": 0.9024596810340881,
+            "mean_p": 0.9413808405399322,
+            "n": 50,
+            "observed_supported_rate": 0.74
+          },
+          {
+            "bin": 9,
+            "hi": 0.9856607913970947,
+            "lo": 0.9633484482765198,
+            "mean_p": 0.974954332624163,
+            "n": 49,
+            "observed_supported_rate": 0.8163265306122449
+          }
+        ],
+        "selective_auprc": 0.6936706506907884,
+        "selective_auroc": 0.6105915615484994,
+        "selective_note": "confidence max(p, 1-p) scored against the model's own correctness: this is the quantity that justifies routing, and it is NOT the same as `auroc`",
+        "shape": {
+          "best_bin": {
+            "bin": 6,
+            "confidence": 0.5677794747206629,
+            "gap": 0.06487358650382691,
+            "mean_p": 0.5677794747206629,
+            "n": 49,
+            "observed": 0.6326530612244898
+          },
+          "first_at_or_below_diagonal_p": 0.7899931359291077,
+          "interior_definition_hi": 0.95,
+          "interior_share_of_ece_pct": 94.39415156047095,
+          "n_bins_below_diagonal": 3,
+          "n_tied_at_zero": 0,
+          "n_tied_at_zero_in_lowest_bin": 0,
+          "note": "signed gap is observed minus predicted, so positive means the model is under-confident there. The claim 'miscalibrated at the confident ends' is false as a statement about predicted probability and true as one about max(p, 1-p): the two widest gaps are at predicted 0.05 and 0.29, and the first of those is a confident prediction. This block exists so the prose has to cite where the deviation is rather than assert where it feels.",
+          "over_confident_band": [
+            0.7899931359291077,
+            0.974954332624163
+          ],
+          "over_confident_band_tolerance": 0.02,
+          "under_confident_at_or_below": 0.5677794747206629,
+          "worst_bins": [
+            {
+              "bin": 2,
+              "confidence": 0.9433448440110197,
+              "gap": 0.49436525217428495,
+              "mean_p": 0.05665515598898031,
+              "n": 49,
+              "observed": 0.5510204081632653
+            },
+            {
+              "bin": 4,
+              "confidence": 0.7743103754520416,
+              "gap": 0.4743103754520416,
+              "mean_p": 0.22568962454795838,
+              "n": 50,
+              "observed": 0.7
+            }
+          ]
+        }
+      },
+      "cost_per_1k_usd": 0.0,
+      "excluded": true,
+      "exclusion_reason": "EXCLUDED as a comparison arm. Our port scores far below the other configurations, and the gap is not a threshold artifact: the best operating point over the whole decision-threshold sweep barely moves it (see minicheck_threshold_sweep), its AUROC is weak, and it calls SUPPORTED on far fewer claims than the gold rate. The scores do not separate, which points at our port (chunking or evidence truncation) rather than at the published model, so we do not publish a number we cannot stand behind. These values exist so section 12 can disclose the attempt with evidence. They are not a MiniCheck result and must never be presented as one.",
+      "false_verification_rate": 0.2474747474747475,
+      "latency_ms": {
+        "mean": 1283.6178600547348,
+        "p50": 1024.0614409995032,
+        "p90": 2077.827582399186,
+        "p95": 2425.3034146007826,
+        "p99": 4280.025778597774
+      },
+      "macro_bacc": 0.615844535072532,
+      "macro_bacc_ci": [
+        0.5627402641666425,
+        0.6672308318219687
+      ],
+      "macro_f1": 0.5775294939174538,
+      "mcc": 0.21626805972869373,
+      "n_false_verified": 49,
+      "per_dataset": {
+        "AggreFact-CNN": 0.45676691729323304,
+        "AggreFact-XSum": 0.5925925925925926,
+        "ClaimVerify": 0.5472972972972974,
+        "ExpertQA": 0.6672297297297297,
+        "FactCheck-GPT": 0.6936090225563909,
+        "Lfqa": 0.7767857142857142,
+        "RAGTruth": 0.6707317073170732,
+        "Reveal": 0.6991978609625669,
+        "TofuEval-MediaS": 0.5512820512820513,
+        "TofuEval-MeetB": 0.6259398496240601,
+        "Wice": 0.4928571428571429
+      },
+      "pooled_balanced_accuracy": 0.6069023569023568,
+      "pred_supported_rate": 0.37575757575757573,
+      "published_reference": {
+        "captured_utc": "2026-09-20",
+        "comparability_note": "the published figure is a macro average over the full LLM-AggreFact test sets; ours is the same model scored on the 495 dev claims of this study, so a gap of a few points would be a split effect. A gap of this size is not.",
+        "harness_validation_target": "MiniCheck-Flan-T5-L average 75.0",
+        "macro_bacc": 0.75,
+        "manifest": "data/manifests/llm_aggrefact_published_leaderboard.json",
+        "model_row": "MiniCheck-Flan-T5-L",
+        "our_macro_bacc": 0.615844535072532,
+        "role": "external harness-validity anchor (threats-to-validity C4): the arm exists to show that the loader, the label join and the balanced-accuracy code reproduce a published number. It did not, and the arm is excluded.",
+        "shortfall_pp": 13.415546492746799,
+        "source": "https://llm-aggrefact.github.io/",
+        "split": "test"
+      },
+      "raw_accuracy": 0.5777777777777777,
+      "threshold_sweep": {
+        "best_cut": 0.273573,
+        "best_macro_bacc": 0.6243669659517139,
+        "default_cut": 0.5,
+        "default_macro_bacc": 0.615844535072532,
+        "gap_to_jev_at_best_cut_pp": 10.837258817263695,
+        "headroom_from_retuning_pp": 0.8522430879181919,
+        "n_cutpoints": 454,
+        "note": "EXCLUDED arm. Retuning the cut point is the best case for our port and it still does not reach the other configurations, so the exclusion is not a threshold artifact."
+      },
+      "verified_precision": 0.7365591397849462
+    }
+  },
+  "cost_decomposition": {
+    "astra_input_price_per_mtok_usd": 10.0,
+    "astra_output_price_per_mtok_usd": 50.0,
+    "astra_output_token_uplift": 1.059318075665577,
+    "cost_ratio_headline": 186.69252822106662,
+    "cost_ratio_if_output_billed_at_input_rate": 181.06472247059628,
+    "free_output_share_of_ratio_pct": 3.0144782997455253,
+    "identity_check": 186.69252822106665,
+    "input_price_ratio": 238.09523809523807,
+    "input_token_ratio_jev_over_astra": 1.3509838441178936,
+    "jev_cost_per_1k_usd": 0.04785700606060606,
+    "jev_cost_per_1k_usd_if_output_billed_at_input_rate": 0.04934448484848485,
+    "jev_input_price_per_mtok_usd": 0.042,
+    "jev_output_price_per_mtok_usd": 0.0,
+    "note": "The headline cost ratio is an exact product of three measured factors: the input-price ratio, divided by the ratio of mean input tokens (which runs the other way, because the decision model sends the longer request), times the frontier arm's output-token uplift. identity_check reproduces cost_ratio_headline to machine precision and the assertion in this file fails the run if it ever stops doing so. The vendor charging for input only is NOT the driver: billing the decision model's measured output tokens at its own input rate leaves the ratio almost unchanged. Both prices are list prices from one snapshot of two vendors' public pages on a single day, and free output tokens are a pricing policy, not a property of the model (threats-to-validity B6).",
+    "ratio_from_price_and_tokens_only": 176.2384051681233
+  },
+  "dataset_support": {
+    "note": "every dataset keeps both gold classes in the full 495, so macro balanced accuracy is defined everywhere. A single held-out cross-fitting fold can still lose the thinnest minority class, which is why the cross-fitted cascade is scored over the assembled out-of-fold predictions rather than fold by fold.",
+    "per_dataset": {
+      "AggreFact-CNN": {
+        "min_class": 7,
+        "n": 45,
+        "n_supported": 38,
+        "n_unsupported": 7
+      },
+      "AggreFact-XSum": {
+        "min_class": 18,
+        "n": 45,
+        "n_supported": 18,
+        "n_unsupported": 27
+      },
+      "ClaimVerify": {
+        "min_class": 8,
+        "n": 45,
+        "n_supported": 37,
+        "n_unsupported": 8
+      },
+      "ExpertQA": {
+        "min_class": 8,
+        "n": 45,
+        "n_supported": 37,
+        "n_unsupported": 8
+      },
+      "FactCheck-GPT": {
+        "min_class": 7,
+        "n": 45,
+        "n_supported": 7,
+        "n_unsupported": 38
+      },
+      "Lfqa": {
+        "min_class": 21,
+        "n": 45,
+        "n_supported": 21,
+        "n_unsupported": 24
+      },
+      "RAGTruth": {
+        "min_class": 4,
+        "n": 45,
+        "n_supported": 41,
+        "n_unsupported": 4
+      },
+      "Reveal": {
+        "min_class": 11,
+        "n": 45,
+        "n_supported": 11,
+        "n_unsupported": 34
+      },
+      "TofuEval-MediaS": {
+        "min_class": 6,
+        "n": 45,
+        "n_supported": 39,
+        "n_unsupported": 6
+      },
+      "TofuEval-MeetB": {
+        "min_class": 7,
+        "n": 45,
+        "n_supported": 38,
+        "n_unsupported": 7
+      },
+      "Wice": {
+        "min_class": 10,
+        "n": 45,
+        "n_supported": 10,
+        "n_unsupported": 35
+      }
+    },
+    "thinnest_dataset": "RAGTruth",
+    "thinnest_minority_class_n": 4
+  },
+  "excluded_arms": [
+    "minicheck"
+  ],
+  "gating": [
+    {
+      "coverage": 1.0,
+      "datasets_dropped": [],
+      "false_verification_rate": 0.23232323232323232,
+      "macro_bacc": 0.7327395541243509,
+      "n": 495,
+      "n_datasets_dropped": 0,
+      "n_datasets_scored": 11,
+      "pooled_balanced_accuracy": 0.7929292929292929,
+      "threshold": 0.5,
+      "verified_precision": 0.8408304498269896
+    },
+    {
+      "coverage": 0.8909090909090909,
+      "datasets_dropped": [],
+      "false_verification_rate": 0.20903954802259886,
+      "macro_bacc": 0.7549713605075578,
+      "n": 441,
+      "n_datasets_dropped": 0,
+      "n_datasets_scored": 11,
+      "pooled_balanced_accuracy": 0.8272984078068824,
+      "threshold": 0.7,
+      "verified_precision": 0.8603773584905661
+    },
+    {
+      "coverage": 0.8282828282828283,
+      "datasets_dropped": [],
+      "false_verification_rate": 0.18674698795180722,
+      "macro_bacc": 0.7722212034175514,
+      "n": 410,
+      "n_datasets_dropped": 0,
+      "n_datasets_scored": 11,
+      "pooled_balanced_accuracy": 0.8492494568437685,
+      "threshold": 0.8,
+      "verified_precision": 0.8744939271255061
+    },
+    {
+      "coverage": 0.6909090909090909,
+      "datasets_dropped": [],
+      "false_verification_rate": 0.16783216783216784,
+      "macro_bacc": 0.7584173007430728,
+      "n": 342,
+      "n_datasets_dropped": 0,
+      "n_datasets_scored": 11,
+      "pooled_balanced_accuracy": 0.8608075341743684,
+      "threshold": 0.9,
+      "verified_precision": 0.8805970149253731
+    },
+    {
+      "coverage": 0.5575757575757576,
+      "datasets_dropped": [],
+      "false_verification_rate": 0.10743801652892562,
+      "macro_bacc": 0.8043327362292879,
+      "n": 276,
+      "n_datasets_dropped": 0,
+      "n_datasets_scored": 11,
+      "pooled_balanced_accuracy": 0.8849906691548921,
+      "threshold": 0.95,
+      "verified_precision": 0.912751677852349
+    },
+    {
+      "coverage": 0.4868686868686869,
+      "datasets_dropped": [],
+      "false_verification_rate": 0.07207207207207207,
+      "macro_bacc": 0.8096320346320347,
+      "n": 241,
+      "n_datasets_dropped": 0,
+      "n_datasets_scored": 11,
+      "pooled_balanced_accuracy": 0.9101178101178101,
+      "threshold": 0.97,
+      "verified_precision": 0.9354838709677419
+    },
+    {
+      "coverage": 0.3515151515151515,
+      "datasets_dropped": [
+        "AggreFact-CNN",
+        "TofuEval-MediaS"
+      ],
+      "false_verification_rate": 0.020833333333333332,
+      "macro_bacc": 0.8787274453941121,
+      "n": 174,
+      "n_datasets_dropped": 2,
+      "n_datasets_scored": 9,
+      "pooled_balanced_accuracy": 0.9190705128205128,
+      "threshold": 0.99,
+      "verified_precision": 0.9710144927536232
+    }
+  ],
+  "gold_supported_rate": 0.6,
+  "jev_rerun": {
+    "agreement": 0.9858585858585859,
+    "false_verification_rate": 0.2474747474747475,
+    "macro_bacc": 0.7243931727618651,
+    "macro_bacc_delta_pp": -0.8346381362485777,
+    "max_flip_confidence": 0.6,
+    "n": 495,
+    "n_flips": 7,
+    "note": "an EARLIER exploratory run of the same model version over the same example IDs. It carries no run manifest and a reduced row schema, so the two runs cannot be proven to share a configuration; it is reported as a lower bound on run-to-run movement, never as a second measurement of the headline.",
+    "path": "runs/explore-jev-dev/jev_dev_sample.jsonl",
+    "per_dataset": {
+      "AggreFact-CNN": 0.4868421052631579,
+      "AggreFact-XSum": 0.6388888888888888,
+      "ClaimVerify": 0.847972972972973,
+      "ExpertQA": 0.6047297297297297,
+      "FactCheck-GPT": 0.6484962406015038,
+      "Lfqa": 0.8660714285714286,
+      "RAGTruth": 0.7896341463414633,
+      "Reveal": 0.7740641711229946,
+      "TofuEval-MediaS": 0.6153846153846154,
+      "TofuEval-MeetB": 0.8176691729323309,
+      "Wice": 0.8785714285714286
+    },
+    "per_dataset_false_verified": {
+      "AggreFact-CNN": 7,
+      "AggreFact-XSum": 15,
+      "ClaimVerify": 2,
+      "ExpertQA": 2,
+      "FactCheck-GPT": 5,
+      "Lfqa": 3,
+      "RAGTruth": 1,
+      "Reveal": 3,
+      "TofuEval-MediaS": 4,
+      "TofuEval-MeetB": 2,
+      "Wice": 5
+    },
+    "sha256": "99c7d846633bc0c1b8951b328f2ef6a27103d3dd45447d39a2f86fb3d871a146"
+  },
+  "latency_note": "Both bulk runs used concurrency 12, so per-request latency includes client-side queueing. These are descriptive, NOT the controlled us-west-2 measurement of spec section 21, and no latency ratio is reported (CLAUDE.md rule 10).",
+  "minicheck_exclusion": "EXCLUDED as a comparison arm. Our port scores far below the other configurations, and the gap is not a threshold artifact: the best operating point over the whole decision-threshold sweep barely moves it (see minicheck_threshold_sweep), its AUROC is weak, and it calls SUPPORTED on far fewer claims than the gold rate. The scores do not separate, which points at our port (chunking or evidence truncation) rather than at the published model, so we do not publish a number we cannot stand behind. These values exist so section 12 can disclose the attempt with evidence. They are not a MiniCheck result and must never be presented as one.",
+  "minicheck_missing_rows": 0,
+  "minicheck_scored": true,
+  "minicheck_threshold_sweep": {
+    "best_cut": 0.273573,
+    "best_macro_bacc": 0.6243669659517139,
+    "default_cut": 0.5,
+    "default_macro_bacc": 0.615844535072532,
+    "gap_to_jev_at_best_cut_pp": 10.837258817263695,
+    "headroom_from_retuning_pp": 0.8522430879181919,
+    "n_cutpoints": 454,
+    "note": "EXCLUDED arm. Retuning the cut point is the best case for our port and it still does not reach the other configurations, so the exclusion is not a threshold artifact."
+  },
+  "multiplicity": {
+    "adjusted": {
+      "AstraAstraHigh": 1.0,
+      "AstraMiniCheck": 4.783654360942343e-13,
+      "CascadeAstra": 1.0,
+      "CascadeAstraFVR": 0.05712890625,
+      "CascadeAstraHigh": 1.0,
+      "CascadeAstraHighFVR": 0.00537109375,
+      "CascadeAtNinetyNineFVRVsAstra": 1.0,
+      "CascadeJev": 1.0,
+      "CascadeJevFVR": 0.458984375,
+      "FVRGap": 0.00537109375,
+      "JevAstra": 1.0,
+      "JevAstraHigh": 1.0,
+      "JevMiniCheck": 2.114526837478116e-15
+    },
+    "cascade_guard_holm_break_dropped": [
+      "AstraAstraHigh",
+      "CascadeAtNinetyNineFVRVsAstra"
+    ],
+    "cascade_guard_holm_clears_at_family_n": 11,
+    "cascade_guard_holm_clears_dropping_any_one_above": false,
+    "cascade_guard_holm_members_above": [
+      "AstraAstraHigh",
+      "CascadeAstra",
+      "CascadeAstraHigh",
+      "CascadeAtNinetyNineFVRVsAstra",
+      "CascadeJev",
+      "CascadeJevFVR",
+      "JevAstra",
+      "JevAstraHigh"
+    ],
+    "cascade_guard_holm_members_above_n": 8,
+    "cascade_guard_holm_note": "the guard penalty's adjusted p depends on how many members sit at or above its raw p, so the family boundary decides it. Removing the two MiniCheck members cannot: both are smaller than every other member. Removing any one of the larger members can, and cascade_guard_holm_clears_at_family_n is the largest family at which it clears 0.05. The paper reports the family it fixed in code, and this bound beside it.",
+    "cascade_guard_holm_p_at_that_family": 0.04443359375,
+    "cascade_guard_holm_p_excluding_minicheck": 0.05712890625,
+    "family_size": 13,
+    "fvr_gap_holm_break_family_n": 94,
+    "fvr_gap_raw_p": 0.0005335211753845215,
+    "median_members": [
+      "CascadeAstra",
+      "CascadeAstraFVR",
+      "CascadeAstraHigh",
+      "CascadeAstraHighFVR",
+      "CascadeJev",
+      "CascadeJevFVR"
+    ],
+    "median_members_note": "these members are the median of one exact McNemar per cross-fitting repeat over overlapping resamples of the same claims, not single exact tests; the adjustment on them is descriptive and the paper says so in section 5 and appendix E.",
+    "method": "Holm-Bonferroni, step-down, monotonicity enforced",
+    "n_clearing_uncorrected": 3,
+    "note": "the family is every exact McNemar this paper reports as evidence about a comparison between configurations, fixed in code before the adjustment is computed. A smaller family would let more results through and the paper does not get to choose one after the fact.",
+    "raw": {
+      "AstraAstraHigh": 1.0,
+      "AstraMiniCheck": 3.98637863411862e-14,
+      "CascadeAstra": 0.20048842206597334,
+      "CascadeAstraFVR": 0.00634765625,
+      "CascadeAstraHigh": 0.23269319190831084,
+      "CascadeAstraHighFVR": 0.00048828125,
+      "CascadeAtNinetyNineFVRVsAstra": 1.0,
+      "CascadeJev": 0.8639947331685107,
+      "CascadeJevFVR": 0.057373046875,
+      "FVRGap": 0.0005335211753845215,
+      "JevAstra": 0.48868297090314317,
+      "JevAstraHigh": 0.48278855684402133,
+      "JevMiniCheck": 1.626559105752397e-16
+    },
+    "survives_at_05": [
+      "AstraMiniCheck",
+      "CascadeAstraHighFVR",
+      "FVRGap",
+      "JevMiniCheck"
+    ],
+    "survives_at_05_excluding_minicheck": [
+      "CascadeAstraHighFVR",
+      "FVRGap"
+    ]
+  },
+  "n_datasets": 11,
+  "n_gold_supported": 297,
+  "n_gold_unsupported": 198,
+  "n_paired": 495,
+  "operational": {
+    "astra_macro_bacc": 0.738302531808106,
+    "jev_macro_bacc": 0.7327395541243509,
+    "n": 495,
+    "note": "model-caused failures scored as wrong; identical to the scored view here because no run had a model-caused failure"
+  },
+  "pairs": {
+    "astra|astra_high": {
+      "a_only_correct": 6,
+      "agreement": 0.9757575757575757,
+      "b_only_correct": 6,
+      "both_correct": 382,
+      "disagreement": 0.024242424242424242,
+      "macro_bacc_delta_boot_mean_pp": -0.2838292811819105,
+      "macro_bacc_delta_ci_pp": [
+        -1.3188848956939392,
+        0.663257135818101
+      ],
+      "macro_bacc_delta_pp": -0.27859567333251567,
+      "mcnemar_p": 1.0,
+      "mcnemar_statistic": 6.0,
+      "mcnemar_tests": "RAW per-item accuracy pooled over datasets, NOT the macro-averaged balanced accuracy reported in macro_bacc_delta_pp",
+      "neither_correct": 101,
+      "raw_accuracy_favors": "tie"
+    },
+    "astra|minicheck": {
+      "a_only_correct": 145,
+      "agreement": 0.6202020202020202,
+      "b_only_correct": 43,
+      "both_correct": 243,
+      "disagreement": 0.3797979797979798,
+      "macro_bacc_delta_boot_mean_pp": 12.229372825884969,
+      "macro_bacc_delta_ci_pp": [
+        5.623364834648327,
+        18.88132720027025
+      ],
+      "macro_bacc_delta_pp": 12.2457996735574,
+      "mcnemar_p": 3.98637863411862e-14,
+      "mcnemar_statistic": 43.0,
+      "mcnemar_tests": "RAW per-item accuracy pooled over datasets, NOT the macro-averaged balanced accuracy reported in macro_bacc_delta_pp",
+      "neither_correct": 64,
+      "raw_accuracy_favors": "astra"
+    },
+    "jev|astra": {
+      "a_only_correct": 41,
+      "agreement": 0.8484848484848485,
+      "b_only_correct": 34,
+      "both_correct": 354,
+      "disagreement": 0.15151515151515152,
+      "macro_bacc_delta_boot_mean_pp": -0.5409427780831386,
+      "macro_bacc_delta_ci_pp": [
+        -5.601202328852565,
+        4.461010407445906
+      ],
+      "macro_bacc_delta_pp": -0.5562977683755133,
+      "mcnemar_p": 0.48868297090314317,
+      "mcnemar_statistic": 34.0,
+      "mcnemar_tests": "RAW per-item accuracy pooled over datasets, NOT the macro-averaged balanced accuracy reported in macro_bacc_delta_pp",
+      "neither_correct": 66,
+      "raw_accuracy_favors": "jev"
+    },
+    "jev|astra_high": {
+      "a_only_correct": 40,
+      "agreement": 0.8525252525252526,
+      "b_only_correct": 33,
+      "both_correct": 355,
+      "disagreement": 0.14747474747474748,
+      "macro_bacc_delta_boot_mean_pp": -0.8247720592650489,
+      "macro_bacc_delta_ci_pp": [
+        -5.92742456997908,
+        4.1372193658016645
+      ],
+      "macro_bacc_delta_pp": -0.8348934417080289,
+      "mcnemar_p": 0.48278855684402133,
+      "mcnemar_statistic": 33.0,
+      "mcnemar_tests": "RAW per-item accuracy pooled over datasets, NOT the macro-averaged balanced accuracy reported in macro_bacc_delta_pp",
+      "neither_correct": 67,
+      "raw_accuracy_favors": "jev"
+    },
+    "jev|minicheck": {
+      "a_only_correct": 146,
+      "agreement": 0.6303030303030303,
+      "b_only_correct": 37,
+      "both_correct": 249,
+      "disagreement": 0.3696969696969697,
+      "macro_bacc_delta_boot_mean_pp": 11.68843004780183,
+      "macro_bacc_delta_ci_pp": [
+        5.72909227654855,
+        17.59105506198248
+      ],
+      "macro_bacc_delta_pp": 11.689501905181887,
+      "mcnemar_p": 1.626559105752397e-16,
+      "mcnemar_statistic": 37.0,
+      "mcnemar_tests": "RAW per-item accuracy pooled over datasets, NOT the macro-averaged balanced accuracy reported in macro_bacc_delta_pp",
+      "neither_correct": 63,
+      "raw_accuracy_favors": "jev"
+    }
+  },
+  "prompt_parity": {
+    "arm": "astra",
+    "fvr_gap_shift_pp": 0.0,
+    "n": 495,
+    "n_flips": 9,
+    "n_flips_on_gold_supported": 9,
+    "n_flips_on_gold_unsupported": 0,
+    "n_flips_to_supported": 7,
+    "n_flips_to_unsupported": 2,
+    "note": "the pre-correction frontier run (superseded, released, never a reported configuration) scored on the same paired frame and gold vector as the corrected run. One prompt change on one arm is a single observation of prompt sensitivity, not a sensitivity study.",
+    "path": "runs/paired-astra-vs-jev-20260921-v2/predictions_gpt6_astra.jsonl",
+    "post_false_verification_rate": 0.1414141414141414,
+    "post_fvr_gap_pp": 9.090909090909092,
+    "post_macro_bacc": 0.738302531808106,
+    "post_pred_supported_rate": 0.49696969696969695,
+    "pre_false_verification_rate": 0.1414141414141414,
+    "pre_fvr_gap_pp": 9.090909090909092,
+    "pre_macro_bacc": 0.7305931800095956,
+    "pre_pred_supported_rate": 0.4868686868686869,
+    "sha256": "9e771236b934e77cf1c3613fb5e2c2bae3059f626ae8a6acdf52b24452274d81"
+  },
+  "prompt_parity_high": {
+    "arm": "astra_high",
+    "fvr_gap_shift_pp": -0.5050505050505055,
+    "n": 495,
+    "n_flips": 5,
+    "n_flips_on_gold_supported": 4,
+    "n_flips_on_gold_unsupported": 1,
+    "n_flips_to_supported": 3,
+    "n_flips_to_unsupported": 2,
+    "note": "the pre-correction frontier run (superseded, released, never a reported configuration) scored on the same paired frame and gold vector as the corrected run. One prompt change on one arm is a single observation of prompt sensitivity, not a sensitivity study.",
+    "path": "runs/paired-astra-highthink-20260921/predictions_gpt6_astra.jsonl",
+    "post_false_verification_rate": 0.13131313131313133,
+    "post_fvr_gap_pp": 10.1010101010101,
+    "post_macro_bacc": 0.7410884885414312,
+    "post_pred_supported_rate": 0.4888888888888889,
+    "pre_false_verification_rate": 0.12626262626262627,
+    "pre_fvr_gap_pp": 10.606060606060606,
+    "pre_macro_bacc": 0.7393329348019819,
+    "pre_pred_supported_rate": 0.4868686868686869,
+    "sha256": "4509ff2d65be992aa8a80bd961eb8a329ae8c0114c295cad981c1997cf9336f2"
+  },
+  "provenance": {
+    "bootstrap_resamples": 10000,
+    "config": "configs/benchmark.yaml",
+    "dataset": "lytang/LLM-AggreFact dev split",
+    "generator": "scripts/verify/paired_analysis.py",
+    "leaderboard_manifest": "data/manifests/llm_aggrefact_published_leaderboard.json",
+    "parquet_sha256": "ca9a5bda9561bbc6f7327ef81ab41727fa10e96f96e9dc74ef32ba3af3c1d8a8",
+    "prediction_file_sha256": {
+      "runs/paired-astra-highthink-20260921-p2b/predictions_gpt6_astra.jsonl": "ed01c175d244843156982e699dc7d0bb4d691f0e697643997967f733c7258045",
+      "runs/paired-astra-lowthink-20260921-p2b/predictions_gpt6_astra.jsonl": "8c873a804e650e9c5b915ea8b6d130788e9d2bc492d4651cda74c1da58ff7586",
+      "runs/paired-jev-20260921/predictions_jev.jsonl": "b52b7a5998d3547b1f91ac7b5630aa4fadc7f75780104bbdbf5aaba291d2a1b1",
+      "runs/paired-minicheck-20260922/predictions_minicheck.jsonl": "796f886fc075afeb0c78221c0ea803f9002220d3115d26823463f8a63bfd3dd0"
+    },
+    "pricing_snapshot": "configs/pricing_2026-09-20.yaml",
+    "runs": {
+      "astra": "runs/paired-astra-lowthink-20260921-p2b/predictions_gpt6_astra.jsonl",
+      "astra_high": "runs/paired-astra-highthink-20260921-p2b/predictions_gpt6_astra.jsonl",
+      "jev": "runs/paired-jev-20260921/predictions_jev.jsonl",
+      "minicheck": "runs/paired-minicheck-20260922/predictions_minicheck.jsonl"
+    },
+    "sample_id_list": {
+      "n": 495,
+      "note": "the example IDs every run script reads. The draw itself predates this repository's gated pipeline and is not regenerated by any code here, so the list is released and hashed as data. Its per-dataset composition and both gold classes per dataset are checkable from the list alone.",
+      "path": "runs/explore-jev-dev/jev_dev_sample.jsonl",
+      "sha256": "99c7d846633bc0c1b8951b328f2ef6a27103d3dd45447d39a2f86fb3d871a146"
+    },
+    "seed": 20260918
+  },
+  "published_leaderboard": {
+    "capture_scope": "PARTIAL. This file was captured to pin the published MiniCheck-Flan-T5-L row as the harness-validity anchor of threats-to-validity C4; the other rows were kept as context and were not selected by any stated rule. The public leaderboard at the source URL lists many more systems, at scores that fall between the rows captured here and below the lowest of them. Nothing in this paper may describe these four rows as the field, or as bounding it.",
+    "captured_utc": "2026-09-20",
+    "comparability_note": "These are macro balanced accuracies over the FULL LLM-AggreFact TEST sets, reported by their authors under their own prompts and harnesses. Every number this paper reports is a macro over a 495-claim DEV sample under one shared prompt. The two are not on the same footing and no difference between them is a measurement of anything. They are printed so a reader has an external scale for the task rather than only the two systems we happened to run.",
+    "manifest": "data/manifests/llm_aggrefact_published_leaderboard.json",
+    "rows": {
+      "Bespoke-MiniCheck-7B": 0.774,
+      "Claude-3.5-Sonnet": 0.772,
+      "MiniCheck-Flan-T5-L": 0.75,
+      "gpt-4o-2024-05-13": 0.759
+    },
+    "source": "https://llm-aggrefact.github.io/",
+    "split": "test"
+  },
+  "ratios": {
+    "cost_astra_high_over_jev": 223.56795399493555,
+    "cost_astra_over_crossfit_cascade": 3.064638536105671,
+    "cost_astra_over_jev": 186.69252822106662
+  },
+  "rows_read": {
+    "astra": 495,
+    "astra_high": 495,
+    "jev": 495,
+    "minicheck": 495
+  },
+  "same_prompt_repeat": {
+    "agreement": 1.0,
+    "capped_macro_bacc": 0.7755430707636589,
+    "capped_max_completion_tokens": 16,
+    "capped_path": "runs/paired-astra-vs-jev-20260921/predictions_gpt6_astra.jsonl",
+    "capped_sha256": "8a929605bb8cf2eb07b1fb6f93f9e9228c9c470721f2762d0cbcfd546a1609b4",
+    "compared_reasoning_mean_repeat": 0.45498783454987834,
+    "compared_reasoning_mean_reported": 0.4720194647201946,
+    "compared_reasoning_zero_n_repeat": 397,
+    "compared_reasoning_zero_n_reported": 395,
+    "excluded_reasoning_n": 84,
+    "excluded_reasoning_nonzero_n_repeat": 80,
+    "excluded_reasoning_nonzero_n_reported": 72,
+    "macro_bacc_delta_pp": 0.0,
+    "n_capped_no_answer": 84,
+    "n_compared": 411,
+    "n_flips": 0,
+    "n_paired": 495,
+    "note": "two passes of the SAME frontier prompt, reasoning effort and model, differing only in our completion-token cap. That prompt is the SUPERSEDED pre-parity prompt, not the corrected prompt behind the reported frontier numbers. Restricted to the claims the capped pass answered, which are the shorter-answer rows and the rows on which the model reports no reasoning tokens, so it bounds run-to-run movement on those rows only. All of the prompt-parity flips are outside that set.",
+    "parity_flip_reasoning_mean_repeat": 54.77777777777778,
+    "parity_flip_reasoning_mean_reported": 51.22222222222222,
+    "parity_flips": 9,
+    "parity_flips_expected_in_capped_no_answer": 1.5272727272727273,
+    "parity_flips_in_capped_no_answer": 9,
+    "prompt_edit_flips_on_compared": 0,
+    "prompt_hash": "sha256:f647a87addd35eb66aac23b0170618489b611a8357a12af8363825218527d24b",
+    "reasoning_effort": "low",
+    "repeat_macro_bacc": 0.7755430707636589,
+    "repeat_max_completion_tokens": 256,
+    "repeat_path": "runs/paired-astra-vs-jev-20260921-v2/predictions_gpt6_astra.jsonl",
+    "reported_path": "runs/paired-astra-lowthink-20260921-p2b/predictions_gpt6_astra.jsonl",
+    "reported_prompt_hash": "sha256:2bc84cee13a07ab7af79f785ad5b1eeb0d4bcefbd61c0a603d770554266bcefd"
+  },
+  "schema_version": 2,
+  "valid_rate": {
+    "astra": 1.0,
+    "astra_high": 1.0,
+    "jev": 1.0,
+    "minicheck": 1.0
+  }
+}

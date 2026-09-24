@@ -1,0 +1,5 @@
+# sha256 over FILE BYTES (not decoded text): read_text() performs
+# universal-newline translation and is not round-trip stable for CRLF.
+# Verify with: shasum -a 256 -c legal/typesafe-mca-snapshot-2026-09-20.sha256
+e8eda228c6da44f61aa09e2563765926393295b1ddefd88cd5a8f83c4f130e82  legal/typesafe-mca-snapshot-2026-09-20.html
+443b08be4822280f7c388332985d4827107b814c837f0af12dcff4b46ad4dca0  legal/typesafe-mca-snapshot-2026-09-20.txt

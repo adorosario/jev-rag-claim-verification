@@ -1,0 +1,18 @@
+{
+  "algorithm": "sha256",
+  "configs": {
+    "configs/benchmark.yaml": "f024ab5d3225c866062374e92f83b591e6c70fbd0b022c0d80162639af2f7456",
+    "configs/pricing_2026-09-20.yaml": "7d076764ad0a42f9a2f5d5de81ae4f5feccffe6f75f8ab9fbe19d48d600d5f0e"
+  },
+  "dataset_parquet_sha256": "ca9a5bda9561bbc6f7327ef81ab41727fa10e96f96e9dc74ef32ba3af3c1d8a8",
+  "generator": "scripts/verify/paired_analysis.py",
+  "lock": "results-lock-arxiv-v1",
+  "n_paired": 495,
+  "prediction_files": {
+    "runs/paired-astra-highthink-20260921-p2b/predictions_gpt6_astra.jsonl": "ed01c175d244843156982e699dc7d0bb4d691f0e697643997967f733c7258045",
+    "runs/paired-astra-lowthink-20260921-p2b/predictions_gpt6_astra.jsonl": "8c873a804e650e9c5b915ea8b6d130788e9d2bc492d4651cda74c1da58ff7586",
+    "runs/paired-jev-20260921/predictions_jev.jsonl": "b52b7a5998d3547b1f91ac7b5630aa4fadc7f75780104bbdbf5aaba291d2a1b1",
+    "runs/paired-minicheck-20260922/predictions_minicheck.jsonl": "796f886fc075afeb0c78221c0ea803f9002220d3115d26823463f8a63bfd3dd0"
+  },
+  "what": "sha256 of every prediction file the arXiv paper's numbers are computed from, plus the pinned dataset parquet. Lock before looking (spec section 43): if any hash here changes, every number in the paper has to be regenerated and the reason recorded in docs/reference/incident-log.md."
+}

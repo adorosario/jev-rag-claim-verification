@@ -11,6 +11,14 @@ from pathlib import Path
 
 import pytest
 
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parent))
+from _export import repo_only, needs_gold_labels  # noqa: E402
+
+# The whole module loads the gated LLM-AggreFact parquet.
+pytestmark = needs_gold_labels
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.data.load_aggrefact import (  # noqa: E402

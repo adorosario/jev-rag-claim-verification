@@ -1,0 +1,3 @@
+This checkout is the public reproduction package described in Appendix D of the paper,
+not the working repository it was built from. tests/_export.py reads this file and skips
+the tests whose inputs the package withholds; see that module for the list and the reason.
