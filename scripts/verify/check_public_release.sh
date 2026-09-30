@@ -51,6 +51,8 @@ PATHS=(
   data/manifests/aggrefact_revision.json
   data/manifests/llm_aggrefact_published_leaderboard.json
   docs/reference/incident-log.md
+  docs/reference/limitations-in-full.md
+  scripts/make_limitations_doc.py
   legal/PUBLICATION_PERMISSION_README.md
   legal/typesafe-mca-2.3f-excerpt.md
   legal/typesafe-mca-snapshot-2026-09-20.sha256
