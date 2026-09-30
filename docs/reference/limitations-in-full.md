@@ -101,29 +101,6 @@ therefore not counted: the cascade's guard improvement over Jev alone is
 76 of 200 repeats.
 table[htbp]
 
-Balanced accuracy by component dataset, with gold class support. Sup.\ and
-Uns.\ are the gold-supported and gold-unsupported counts in the sampled claims.
-tab:per-dataset
-tabularlrrrrrr
-
-Dataset & n & Sup. & Uns. & Jev & Astra (low) & Astra (high) \\
-
-AggreFact-CNN & 45 & 38 & 7 & 48.7 & 68.8 & 68.8 \\
-AggreFact-XSum & 45 & 18 & 27 & 67.6 & 63.0 & 65.7 \\
-ClaimVerify & 45 & 37 & 8 & 84.8 & 85.6 & 85.6 \\
-ExpertQA & 45 & 37 & 8 & 60.5 & 46.1 & 46.1 \\
-FactCheck-GPT & 45 & 7 & 38 & 64.8 & 67.5 & 67.5 \\
-LFQA & 45 & 21 & 24 & 84.2 & 81.8 & 86.0 \\
-RAGTruth & 45 & 41 & 4 & 92.7 & 87.8 & 87.8 \\
-Reveal & 45 & 11 & 34 & 72.9 & 80.5 & 80.5 \\
-TofuEval-MediaS & 45 & 39 & 6 & 61.5 & 71.2 & 68.6 \\
-TofuEval-MeetB & 45 & 38 & 7 & 80.5 & 79.1 & 77.8 \\
-Wice & 45 & 10 & 35 & 87.9 & 80.7 & 80.7 \\
-
-tabular
-table
-table[htbp]
-
 Holm-Bonferroni over the 13 exact McNemar tests this paper
 reports, the family fixed in code before the adjustment was computed. Rows marked
  are medians over cross-fitting repeats rather than single exact tests. The two
